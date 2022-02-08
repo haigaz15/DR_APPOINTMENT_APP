@@ -1,44 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { User } from './user.model';
-import {v4 as uuid} from 'uuid';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
-
+import { UsersRepository } from './users.repository';
+import { User } from './user.entiry';
 
 @Injectable()
 export class UsersService {
 
-    private users:User[] = []
+    constructor(
+        @InjectRepository(UsersRepository)
+        private usersRepository:UsersRepository,
+    ){}
+    
+     getAllUsers():Promise<User[]> {
+         return this.usersRepository.getAllUsers();
+     }
 
-    getAllUsers():User[] {
-        return this.users;
-    }
-
-    getUserById(id:string):User {
-        const find = this.users.filter(user=>user.id === id);
-        return find[0];
-    }
-
-    createUser(createUserDto:CreateUserDto):User{
-
-        const {firstName,lastName,email,password} = createUserDto;
-
-         const user:User = {
-             id:uuid(),
-             firstName,
-             lastName,
-             email,
-             password
-         }
-         this.users.push(user);
-         return user;
-    }
-
-    deleteUser(id:string):User{
-        const deletedUser = this.users.filter(user => user.id === id);
-        const filter = this.users.filter(user => user.id !== id);
-        this.users = filter
-        return deletedUser[0];
+    
+    async getUserById(id:string):Promise<User>{
+        const found = await this.usersRepository.findOne(id);
+        if(!found){
+            throw new NotFoundException(`User with Id ${id} not found`)
+        }
+        return found
     }
 
 
+    createUser(createUserDto:CreateUserDto):Promise<User>{
+        return this.usersRepository.createUser(createUserDto)
+    }
+
+
+    async deleteUser(id:string):Promise<void>{
+        const result =  await this.usersRepository.delete(id)
+        if(result.affected === 0) {
+            throw new NotFoundException(`Task with ID ${id} not found`);
+        }
+    }
+
+    updateUser(id:string,createUserDto:CreateUserDto):Promise<User>{
+        return this.usersRepository.updateUser(id,createUserDto)
+    }
 }
