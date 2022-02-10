@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Hospitals from './components/hospital/Hospitals';
 import Header from './components/header/Header';
 import Login from './components/login/Login';
+import SignUp from './components/signup/SignUp';
 function App() {
   const [open, setOpen] = React.useState(false);
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login">
             <Login open={open} handleClose={handleOpen}/>
           </Route>
+          <Route path="/signup"><SignUp/></Route>
         </Switch>
       </Router>
 

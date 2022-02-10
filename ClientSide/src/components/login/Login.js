@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 
 import DialogTitle from '@mui/material/DialogTitle';
 import demoCss from "./Login.module.css"
+import { Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 export default function Login(props) {
 
   const handleClose = () => {
@@ -14,12 +16,12 @@ export default function Login(props) {
   };
 
   return (
-    <div> 
-      <Dialog open={props.open} onClose={handleClose}>
-        <DialogTitle>Log in </DialogTitle>
-        <DialogContent className={demoCss.diaContainer}>
+    <div className={demoCss.diaContainer}> 
+      <Dialog open={props.open} onClose={handleClose} >
+        <DialogTitle className={demoCss.title}>Log in </DialogTitle>
+        <DialogContent className={demoCss.diaContent} >
           <TextField
-            className={demoCss.emailPassword}
+            className={demoCss.formcontrol}
             autoFocus
             margin="dense"
             id="name"
@@ -30,7 +32,7 @@ export default function Login(props) {
           />
           <TextField
           autoFocus
-          className={demoCss.emailPassword}
+          className={demoCss.formcontrol}
           margin="dense"
           id="passwordField"
           label="Password"
@@ -39,9 +41,10 @@ export default function Login(props) {
           
           />
         </DialogContent>
+        <Typography sx={{margin:'auto'}}>Don't have an account <Link to='signup'>click here</Link></Typography>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>submit</Button>
+          <Button className={demoCss.btn} onClick={handleClose}>Cancel</Button>
+          <Button className={demoCss.btn} onClick={handleClose}>submit</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -22,7 +22,7 @@ export class UsersService {
         if(!found){
             throw new NotFoundException(`User with Id ${id} not found`)
         }
-        return found
+        return found 
     }
 
 
