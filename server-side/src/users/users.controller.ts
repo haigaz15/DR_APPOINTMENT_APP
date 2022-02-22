@@ -16,7 +16,7 @@ export class UsersController {
     getTaskById (@Param('id') id:string):Promise<User>{
         return this.usersService.getUserById(id);
     }
-     @Post()
+    @Post()
     createUser(@Body() createUserDto:CreateUserDto ):Promise<User>{
         return this.usersService.createUser(createUserDto);
     }

@@ -17,9 +17,9 @@ export default function Login(props) {
 
   return (
     <div className={demoCss.diaContainer}> 
-      <Dialog open={props.open} onClose={handleClose} >
-        <DialogTitle className={demoCss.title}>Log in </DialogTitle>
-        <DialogContent className={demoCss.diaContent} >
+      <Dialog open={props.open} onClose={handleClose}>
+        <DialogTitle className={demoCss.title} sx={{bgcolor:'#0e5687'}}>Log in </DialogTitle>
+        <DialogContent className={demoCss.diaContent} sx={{'&.MuiDialogContent-root':{background:'#0e5687'}}}>
           <TextField
             className={demoCss.formcontrol}
             autoFocus
@@ -40,11 +40,12 @@ export default function Login(props) {
           fullWidth
           
           />
+        <Typography sx={{margin:'auto',color:'#e8f5fe'}}>Don't have an account <Link to='signup' style={{color:'#e8f5fe'}}>click here</Link></Typography>
         </DialogContent>
-        <Typography sx={{margin:'auto'}}>Don't have an account <Link to='signup'>click here</Link></Typography>
-        <DialogActions>
-          <Button className={demoCss.btn} onClick={handleClose}>Cancel</Button>
-          <Button className={demoCss.btn} onClick={handleClose}>submit</Button>
+        
+        <DialogActions sx={{bgcolor:'#0e5687'}}>
+          <Button sx={{'&.MuiButton-root':{background:'#e8f5fe'}}} onClick={handleClose}>Cancel</Button>
+          <Button sx={{'&.MuiButton-root':{background:'#e8f5fe'}}} onClick={handleClose}>submit</Button>
         </DialogActions>
       </Dialog>
     </div>

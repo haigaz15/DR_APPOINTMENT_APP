@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import {Card,CardActions,Button,CardContent,CardMedia,Typography,Grid} from '@material-ui/core';
 const Hospital = (props) => {
      return(
-      <Grid item xs ={2}>
-        <Card style={{width:"100%",background:"#e8f5fe"}}>
+      <Grid item xs ={2} >
+        <Card style={{width:"100%",background:"#e8f5fe", boxShadow: 10}}>
         <CardMedia
           component="img"
           height="140"

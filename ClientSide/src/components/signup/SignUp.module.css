@@ -1,0 +1,14 @@
+
+
+.root{
+    width:600px;
+    padding: 50px 50px 50px 50px;
+    margin:auto;
+    margin-top:300px;
+    background:#0e5687;
+    border-radius: 5px;
+}
+
+.formcontrol{
+    background: #e8f5fe;
+}
