@@ -68,11 +68,12 @@ export class UsersService {
 
 
 
-    async deleteUser(id:string):Promise<void>{
+    async deleteUser(id:string):Promise<String>{
         const result =  await this.usersRepository.delete(id)
         if(result.affected === 0) {
             throw new NotFoundException(`Task with ID ${id} not found`);
         }
+        return `User with id ${id} has been deleted`
     }
 
 }
