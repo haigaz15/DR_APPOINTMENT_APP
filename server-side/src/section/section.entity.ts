@@ -11,10 +11,8 @@ export class Section{
     @Column()
     name:string
 
-    @ManyToMany(()=> Hospital)
-    @JoinTable()
-    hospital:Hospital[];
+    @ManyToMany(()=> Hospital, hospital=> hospital.sections)
+    hospitals:Hospital[];
 
-    @OneToMany(() => Doctor,doctor => doctor.section)
-    doctor:Doctor[];
+
 }

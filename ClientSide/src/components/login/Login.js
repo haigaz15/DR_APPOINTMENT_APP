@@ -9,9 +9,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import demoCss from "./Login.module.css"
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 export default function Login(props) {
+  
+
+  const [username,setUserName] = React.useState('');
+  const [password,setPassword] = React.useState('');
 
   const handleClose = () => {
+    axios.post("http://localhost:4000/auth/signin",{
+      username:username,
+      password:password
+    }).then(response => console.log(response)).catch(error => console.log(error))
+    setUserName('');
+    setPassword('');
     props.handleClose(false)
   };
 
@@ -25,9 +36,11 @@ export default function Login(props) {
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
-            type="email"
+            label="username"
+            type="username"
             fullWidth
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
             
           />
           <TextField
@@ -38,7 +51,8 @@ export default function Login(props) {
           label="Password"
           type="password"
           fullWidth
-          
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           />
         <Typography sx={{margin:'auto',color:'#e8f5fe'}}>Don't have an account <Link to='signup' style={{color:'#e8f5fe'}}>click here</Link></Typography>
         </DialogContent>

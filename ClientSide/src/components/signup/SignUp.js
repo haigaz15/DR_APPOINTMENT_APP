@@ -11,12 +11,14 @@ const SignUp = () => {
     const [lastName,setLastName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [username,setUserName] = useState('')
 
     const handleSubmit = () => {
         axios.post("http://localhost:4000/users",{
             firstName:firstName,
             lastName:lastName,
             email:email,
+            username:username,
             password:password
         }).then(response => console.log(response)).catch(error => console.log(error))
         setFirstName('');
@@ -49,6 +51,17 @@ const SignUp = () => {
           fullWidth
           value={lastName}
           onChange={(e)=>setLastName(e.target.value)}
+          />
+          <TextField
+          autoFocus
+          className={demoCss.formcontrol}
+          margin="dense"
+          id="name"
+          label="username"
+          type="text"
+          fullWidth
+          value={username}
+          onChange={(e)=>setUserName(e.target.value)}
           />
 
         <TextField

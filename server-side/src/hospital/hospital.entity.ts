@@ -12,7 +12,7 @@ export class Hospital{
     @Column()
     location:string;
 
-    @ManyToMany(()=>Section)
+    @ManyToMany(()=>Section, section => section.hospitals)
     @JoinTable()
-    section:Section[];
+    sections:Section[];
 }

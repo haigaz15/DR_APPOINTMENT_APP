@@ -30,7 +30,5 @@ export class Doctor{
     @Column()
     bio:string
 
-    @ManyToOne(()=>Section,section => section.doctor)
-    section:Section
 
 }
