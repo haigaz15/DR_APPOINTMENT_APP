@@ -31,8 +31,6 @@ export class HospitalService {
 
     async getAllHospitals():Promise<Hospital[]>{
         const quary = await this.hospitalRepository.createQueryBuilder("hospital")
-        const sections = await this.sectionService.getAllSection();
-        console.log(sections)
         const  hospitals = quary.leftJoinAndSelect("hospital.sections","section").getMany();
         return hospitals;
     }

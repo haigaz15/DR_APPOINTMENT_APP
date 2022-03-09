@@ -14,5 +14,7 @@ export class Section{
     @ManyToMany(()=> Hospital, hospital=> hospital.sections)
     hospitals:Hospital[];
 
+    @OneToMany(()=>Doctor, doctor=> doctor.section)
+    doctors:Doctor[]
 
 }

@@ -1,8 +1,9 @@
 import { Section } from "src/section/section.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Doctor{
+    
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
@@ -27,8 +28,10 @@ export class Doctor{
     @Column()
     university:string
 
-    @Column()
+    @Column() 
     bio:string
 
+    @ManyToOne(()=> Section, section => section.doctors)
+    section:Section;
 
 }

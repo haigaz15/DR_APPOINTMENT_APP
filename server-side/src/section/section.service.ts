@@ -25,7 +25,14 @@ export class SectionService {
 
     async getAllSection():Promise<Section[]>{
         const query = this.sectionRepository.createQueryBuilder('section');
-        const sections = await query.leftJoinAndSelect("section.hospitals","hospital").getMany();
+        const sections = await query.leftJoinAndSelect("section.hospitals","hospital").leftJoinAndSelect("section.doctors","docttor").getMany();
         return sections
     }
+
+    async getSection(name:string):Promise<Section>{
+        const section  = await this.sectionRepository.findOne({name})
+        return section;
+    }
+
+    
 }
