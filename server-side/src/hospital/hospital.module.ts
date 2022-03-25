@@ -9,6 +9,7 @@ import { SectionModule } from 'src/section/section.module';
 @Module({
   imports: [SectionModule,TypeOrmModule.forFeature([Hospital])],
   providers: [HospitalService],
-  controllers: [HospitalController]
+  controllers: [HospitalController],
+  exports:[HospitalService]
 })
 export class HospitalModule {}

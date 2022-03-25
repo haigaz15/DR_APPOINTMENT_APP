@@ -31,10 +31,20 @@ export class HospitalService {
 
     async getAllHospitals():Promise<Hospital[]>{
         const quary = await this.hospitalRepository.createQueryBuilder("hospital")
-        const  hospitals = quary.leftJoinAndSelect("hospital.sections","section").getMany();
+        const  hospitals = quary.leftJoinAndSelect("hospital.sections","section").leftJoinAndSelect("hospital.doctors","doctors").getMany();
         return hospitals;
     }
 
+    async getHospitalByName(name:string):Promise<Hospital>{
+        const hospital  = await this.hospitalRepository.findOne({name})
+        return hospital;
+    }
+
+    async getSpecifiedHospital(hospitals_):Promise<Hospital[]>{
+        const quary = await this.hospitalRepository.createQueryBuilder("hospital")
+        const  hospitals = quary.leftJoinAndSelect("hospital.doctors","doctor").where("hospital.name IN (:...names)",{names:hospitals_}).getMany()
+        return hospitals;
+    }
     
     
     

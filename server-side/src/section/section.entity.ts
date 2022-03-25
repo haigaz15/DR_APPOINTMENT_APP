@@ -16,5 +16,5 @@ export class Section{
 
     @OneToMany(()=>Doctor, doctor=> doctor.section)
     doctors:Doctor[]
-
+    
 }

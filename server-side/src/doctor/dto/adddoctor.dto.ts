@@ -35,4 +35,7 @@ export class AddDoctorDto {
 
      @IsNotEmpty()
      section:string
+
+     @IsNotEmpty()
+     hospitals:[];
 }

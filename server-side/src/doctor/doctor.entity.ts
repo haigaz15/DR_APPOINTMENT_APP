@@ -1,3 +1,4 @@
+import { Hospital } from "src/hospital/hospital.entity";
 import { Section } from "src/section/section.entity";
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -34,4 +35,6 @@ export class Doctor{
     @ManyToOne(()=> Section, section => section.doctors)
     section:Section;
 
+    @ManyToMany(() => Hospital, hospital=> hospital.doctors)
+    hospitals:Hospital[]
 }

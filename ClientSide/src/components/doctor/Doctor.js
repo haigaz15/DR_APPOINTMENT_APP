@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import BasicTable from '../table/BasicTable';
+import './Doctor.css'
 
-const Doctor = () => {
+
+
+
+const Doctor = ({rows}) => {
+
+
+ 
+    
+
+
+
     return(
-        <div>
-            <BasicTable/>
+        <div className="container">
+            <div className="item1"></div>
+            <div className="item2"><BasicTable rows={rows} /></div>
         </div>
     )
 }

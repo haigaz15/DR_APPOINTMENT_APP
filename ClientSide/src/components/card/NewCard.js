@@ -4,7 +4,7 @@ import {Card,CardActions,Button,CardContent,CardMedia,Typography,Grid} from '@ma
 import styles from './NewCard.Module.css';
   const NewCard = () => {
     return(
-      <Card >
+      <Card>
         <CardMedia
         component="img"
         height="140"

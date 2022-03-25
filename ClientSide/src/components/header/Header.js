@@ -3,7 +3,6 @@ import React from 'react';
 import { Avatar,Box,Button,AppBar,Toolbar, Typography,MenuItem,Menu} from '@mui/material';
 import { Link,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import headerCss from './Header.module.css'
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -25,7 +24,7 @@ const Header = (props) => {
     const pages = [
         {route:"/",value:'home'},
         {route:"/hospitals",value:"Hospitals"},
-        {route:"#",value:"Doctors"},
+        {route:"/doctors",value:"Doctors"},
         {route:"#",value:"Private Clinics"}
     ];
 
