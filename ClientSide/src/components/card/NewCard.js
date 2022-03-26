@@ -2,23 +2,29 @@
 import React, { useState } from 'react';
 import {Card,CardActions,Button,CardContent,CardMedia,Typography,Grid} from '@material-ui/core';
 import styles from './NewCard.Module.css';
-  const NewCard = () => {
+  const NewCard = ({data,handleOpenHospital,hosptialRouteHandler}) => {
+
+    const handleClicked = () =>{
+      hosptialRouteHandler(`/${data.name.toLowerCase().replace(/\s+/g, '')}`,data)
+      handleOpenHospital(`/${data.name.toLowerCase().replace(/\s+/g, '')}`)
+    }
     return(
       <Card>
         <CardMedia
         component="img"
         height="140"
-        alt="Astgh.Med.Cent"
+        alt={data.name}
         />
             <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-            Astghik Medical center 
+            {data.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
+              {data.location}
             </Typography>
             </CardContent>
         <CardActions>
-            <Button size="small">Open</Button>
+            <Button size="small" onClick= {handleClicked}>Open</Button>
         </CardActions>
       </Card>
     )

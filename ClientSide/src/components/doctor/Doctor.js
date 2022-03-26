@@ -7,17 +7,8 @@ import './Doctor.css'
 
 const Doctor = ({rows}) => {
 
-
- 
-    
-
-
-
     return(
-        <div className="container">
-            <div className="item1"></div>
-            <div className="item2"><BasicTable rows={rows} /></div>
-        </div>
+        <div className="item2"><BasicTable rows={rows} /></div>
     )
 }
 export default Doctor;
