@@ -24,6 +24,14 @@ export class DoctorService {
          return doctors;
      }
 
+     async getDoctorById(id:string):Promise<Doctor>{
+         const doctor = await this.doctorRepository.findOne(id);
+         if(!doctor){
+            throw new NotFoundException(`Doctor with Id ${id} not found`)
+        }
+        return doctor
+     }
+
      async addDoctor(addDoctorDto:AddDoctorDto):Promise<Doctor>{
         const {
             firstname,lastname,email,password,

@@ -1,6 +1,8 @@
 import { Hospital } from "src/hospital/hospital.entity";
 import { Section } from "src/section/section.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/user.entiry";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Appointment } from "../appointment/appointment.entity";
 
 @Entity()
 export class Doctor{
@@ -29,7 +31,7 @@ export class Doctor{
     @Column()
     university:string
 
-    @Column() 
+    @Column()
     bio:string
 
     @ManyToOne(()=> Section, section => section.doctors)
@@ -37,4 +39,8 @@ export class Doctor{
 
     @ManyToMany(() => Hospital, hospital=> hospital.doctors)
     hospitals:Hospital[]
+
+    @OneToMany(() => Appointment, appointment => appointment.doctor)
+    appointments?: Appointment[];
+
 }

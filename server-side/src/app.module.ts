@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { HospitalModule } from './hospital/hospital.module';
 import { SectionModule } from './section/section.module';
 import { DoctorModule } from './doctor/doctor.module';
+import { AppointmentModule } from './appointment/appointment.module';
+
 
 
 @Module({
@@ -26,6 +28,7 @@ import { DoctorModule } from './doctor/doctor.module';
     HospitalModule,
     SectionModule,
     DoctorModule,
+    AppointmentModule,
     
 ],
 
