@@ -2,7 +2,8 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entiry';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard1 } from 'src/auth/JwtAuthGaurd1';
+
 
 
 @Controller('users')
@@ -16,7 +17,8 @@ export class UsersController {
     }
 
     @Get('/:id')
-    getTaskById (@Param('id') id:string):Promise<User>{
+    @UseGuards(JwtAuthGuard1)
+    getUserById (@Param('id') id:string):Promise<User>{
         return this.usersService.getUserById(id);
     }
     @Post()
@@ -25,7 +27,6 @@ export class UsersController {
     }
     
     @Delete('/:id')
-    @UseGuards(AuthGuard())
     deleteUser(@Param('id') id:string):Promise<String>{
         return this.usersService.deleteUser(id);
     }

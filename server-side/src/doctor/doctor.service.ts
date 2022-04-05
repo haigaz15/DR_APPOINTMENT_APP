@@ -31,7 +31,11 @@ export class DoctorService {
         }
         return doctor
      }
-
+     async getDoctorByEmail(email:string):Promise<Doctor>{
+         const doctor = await this.doctorRepository.findOne({email})
+         return doctor
+     }
+     
      async addDoctor(addDoctorDto:AddDoctorDto):Promise<Doctor>{
         const {
             firstname,lastname,email,password,

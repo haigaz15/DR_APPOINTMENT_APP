@@ -3,11 +3,11 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { User } from "src/users/user.entiry";
 import { UsersService } from "src/users/users.service";
-import { JwtPayload } from "./jwt-payload.interface";
+import { JwtPayload, JwtPayload1 } from "./jwt-payload.interface";
 
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy){
+export class JwtStrategy extends PassportStrategy(Strategy,'strategy_jwt_1'){
     constructor(
         private usersService:UsersService,)
         {
@@ -21,9 +21,10 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         const {username} = payload;
         const user:User = await this.usersService.findOne(username);
         if(!user){
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("unauthorized user! you are not a valid user");
         }
         return user
     }
+
         
 }

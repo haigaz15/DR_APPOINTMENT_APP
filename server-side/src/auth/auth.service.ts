@@ -3,13 +3,16 @@ import { UsersService } from 'src/users/users.service';
 import * as bycrypt from 'bcrypt';
 import { SignInUserDto } from './dto/signIn-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './jwt-payload.interface';
+import { JwtPayload, JwtPayload1 } from './jwt-payload.interface';
+import { SignInDoctorDto } from './dto/signIn-doctor.dto';
+import { DoctorService } from 'src/doctor/doctor.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         
         private usersService:UsersService,
+        private doctorService:DoctorService,
         private jwtService:JwtService,
         ){}
 
@@ -22,6 +25,18 @@ export class AuthService {
             return {accessToken}
         }else{
             throw new UnauthorizedException('Please check your login credentials');
+        }
+    }
+
+    async validateDoctor(signInDoctorDto:SignInDoctorDto):Promise<{accessToken:string}>{
+        const {email,password} = signInDoctorDto;
+        const doctor = this.doctorService.getDoctorByEmail(email)
+        if(doctor && (await bycrypt.compare(password,(await doctor).password))){
+            const payload:JwtPayload1 = {email};
+            const accessToken = await this.jwtService.sign(payload);
+            return {accessToken}
+        }else{
+            throw new UnauthorizedException('Unauthorized Doctor !')
         }
     }
 }
