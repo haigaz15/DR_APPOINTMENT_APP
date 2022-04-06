@@ -1,7 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard2 } from 'src/auth/JwtAuthGaurd2';
-
-
 import { Appointment } from './appointment.entity';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/createappointment.dto';

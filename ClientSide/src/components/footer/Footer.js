@@ -1,8 +1,5 @@
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 
+import { Container,Grid,Box,Link } from '@mui/material';
 export default function Footer() {
   return (
     <footer>

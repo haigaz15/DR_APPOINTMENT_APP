@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,16 +8,20 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import { Grid,TextField } from '@mui/material';
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import Appoitment from '../appoitment/Appoitment';
 
 export default function BasicTable({rows}) {
 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+
   const [filtered,setFiltered] = React.useState([]);
   const [flag,setFlag] = React.useState(true)
-  const arr = ["Name","Specialty","Section","Hospital","Country Of Specialty"]
+  const [clickedDoctor,setClickedDoctor] = useState({});
+
 
   const searchResult = (e)=>{
     const filterRows = rows.filter((row)=>{
@@ -32,6 +36,12 @@ export default function BasicTable({rows}) {
     })
     setFlag(false);
     setFiltered(filterRows)
+  }
+
+  const handleDoctorClicked = (e,id) =>{
+    setOpen(true)
+    let filtered = rows.filter((row)=>{return row.id === id});
+    setClickedDoctor(filtered[0]);
   }
   
   return (
@@ -68,8 +78,9 @@ export default function BasicTable({rows}) {
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                onClick={(e)=>handleDoctorClicked(e,row.id)}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" >
                   <Grid container>
                     <Grid item lg={2}><Avatar alt={row.firstname} src='.' sx={{marginTop:"-20%",marginLeft:"-20%"}}/></Grid>
                     <Grid item lg={10}>{row.firstname} {row.lastname}</Grid>
@@ -84,6 +95,7 @@ export default function BasicTable({rows}) {
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                onClick={(e)=>handleDoctorClicked(e,row.id)}
               >
                 <TableCell component="th" scope="row">
                   <Grid container>
@@ -99,6 +111,7 @@ export default function BasicTable({rows}) {
           </TableBody>
         </Table>
       </TableContainer>
+      <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
     </Paper>
   );
 }

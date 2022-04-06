@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { Appointment } from './appointment.entity';
 import { CreateAppointmentDto } from './dto/createappointment.dto';
 import { UpdateAppointmentDto } from './dto/updateappointment.dto';
-import { Status } from './status';
+
 
 
 @Injectable()

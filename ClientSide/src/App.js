@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import HomePage from './components/homePage/HomePage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Box } from '@material-ui/core';
+import {Box} from '@mui/material'
 import Hospitals from './components/hospital/Hospitals';
 import Header from './components/header/Header';
 import Login from './components/login/Login';

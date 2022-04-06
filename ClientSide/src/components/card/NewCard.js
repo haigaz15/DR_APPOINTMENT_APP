@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
-import {Card,CardActions,Button,CardContent,CardMedia,Typography,Grid} from '@material-ui/core';
-import styles from './NewCard.Module.css';
+import React from 'react';
+import {Card,CardActions,Button,CardContent,CardMedia,Typography} from '@mui/material'
+
   const NewCard = ({data,handleOpenHospital,hosptialRouteHandler}) => {
 
     const handleClicked = () =>{
