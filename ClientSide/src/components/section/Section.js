@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card,CardActions,Button,CardContent,CardMedia,Typography} from '@mui/material'
+import Appoitment from '../appoitment/Appoitment';
 
 
 const Section = ({doctor}) => {
@@ -25,6 +26,7 @@ const Section = ({doctor}) => {
               <Button size="small">Open</Button>
           </CardActions>
         </Card>
+        <Appoitment doctor={doctor}/>
         </div>
       )
 }

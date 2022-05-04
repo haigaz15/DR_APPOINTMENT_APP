@@ -44,6 +44,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
     setClickedDoctor(filtered[0]);
   }
   const handleForwardArrow = ()=> {
+    setFlag(true)
     let newPage = page + 1
     if(newPage > lastPage){
       newPage = lastPage
@@ -53,6 +54,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
     }
   }
   const handleBackwaredArrow = ()=> {
+    setFlag(true)
     let newPage = page - 1
     if(newPage < 1){
       newPage = 1

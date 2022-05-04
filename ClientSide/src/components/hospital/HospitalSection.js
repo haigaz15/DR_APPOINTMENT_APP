@@ -10,6 +10,9 @@ const HospitalSection = () => {
     const [openSection, setOpenSection] = useState(false);
     const [doctors,setDoctors] = useState([]);
 
+    const handleClose = () =>{
+        setOpenSection(false)
+    }
     
 
     const openTheSection = (section) => {
@@ -37,7 +40,7 @@ const HospitalSection = () => {
          )
              }
          </Grid>
-         <Sections open={openSection} doctors={doctors}/>
+         <Sections open={openSection} doctors={doctors} handleClose={handleClose}/>
          </div>
      )
 }
