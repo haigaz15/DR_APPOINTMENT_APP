@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { SectionService } from './section.service';
 import { Section } from './section.entity';
@@ -16,6 +16,11 @@ export class SectionController {
     @Get()
     getAllSections():Promise<Section[]>{
         return this.sectionService.getAllSection();
+    }
+
+    @Get('/:id')
+    getSectionById(@Param('id') id:string):Promise<Section>{
+        return this.sectionService.getSectionById(id);
     }
     
 }

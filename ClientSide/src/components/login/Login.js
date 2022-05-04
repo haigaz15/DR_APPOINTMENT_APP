@@ -16,18 +16,29 @@ export default function Login(props) {
   const [username,setUserName] = React.useState('');
   const [password,setPassword] = React.useState('');
 
-  const handleClose = () => {
+
+
+  const handleSubmit = () => {
     axios.post("http://localhost:4000/auth/signin",{
       username:username,
       password:password
-    }).then(response => console.log(response)).catch(error => console.log(error))
+    }).then(response => {
+      console.log(response)
+      sessionStorage.setItem('token', response.data.accessToken);
+      sessionStorage.setItem('userId',response.data.userId);
+      window.location.reload()
+    }).catch(error => console.log(error))
     setUserName('');
     setPassword('');
     props.handleClose(false)
   };
 
+  const handleClose = () => {
+    props.handleClose(false)
+  }
   return (
     <div className={demoCss.diaContainer}> 
+    <div style={{marginTop:"37%"}}></div>
       <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle className={demoCss.title} sx={{bgcolor:'#0e5687'}}>Log in </DialogTitle>
         <DialogContent className={demoCss.diaContent} sx={{'&.MuiDialogContent-root':{background:'#0e5687'}}}>
@@ -59,7 +70,7 @@ export default function Login(props) {
         
         <DialogActions sx={{bgcolor:'#0e5687'}}>
           <Button sx={{'&.MuiButton-root':{background:'#e8f5fe'}}} onClick={handleClose}>Cancel</Button>
-          <Button sx={{'&.MuiButton-root':{background:'#e8f5fe'}}} onClick={handleClose}>submit</Button>
+          <Button sx={{'&.MuiButton-root':{background:'#e8f5fe'}}} onClick={handleSubmit}>submit</Button>
         </DialogActions>
       </Dialog>
     </div>

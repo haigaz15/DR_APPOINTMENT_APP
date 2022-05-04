@@ -7,7 +7,7 @@ import { List,ListItem,ListItemText,Divider,TextField } from '@mui/material';
 import { DateTimePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-
+import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -28,17 +28,48 @@ const style = {
   }
 
 
+
 const Appoitment = ({open,handleClose,doctor}) => {
-    
-    console.log(doctor)
+    const userId = sessionStorage.getItem('userId')
 
     const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [user,setUser] = React.useState(null);
 
     const handleChange = (newValue) => {
       setValue(newValue);
     };
+
+    // React.useEffect(()=>{
+    //     axios.get(`http://localhost:4000/users/${window.sessionStorage.getItem('userId')}`,{
+    //         headers:{
+    //             'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
+    //           }
+    //     }).then((value)=>{
+    //         setUser(value.data)
+    //     }).catch((value)=>{
+    //         console.log(value)
+    //     })
+    // },[])
   
-  
+    const handleSubmit = (e) =>{
+        axios.post(`http://localhost:4000/appointment`,{
+            
+                userId:window.sessionStorage.getItem('userId'),
+                doctorId:doctor.id,
+                appointmentstatus:"pending",
+                date:value
+            
+            
+        },{
+            headers:{
+                'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
+            } 
+        }).then((value)=>{
+            console.log(value)
+        }).catch((value)=>{
+            console.log(value)
+        })
+    }
     return (
       <div>
         <Modal
@@ -166,7 +197,7 @@ const Appoitment = ({open,handleClose,doctor}) => {
                     </LocalizationProvider>
                 </ListItem>
                 <ListItem>
-                    <Button sx={{margin:'auto',color:'#0e5687'}}>Submit</Button>
+                    <Button sx={{margin:'auto',color:'#0e5687'}} onClick={handleSubmit}>Submit</Button>
                 </ListItem>
             </List>
           </Box>

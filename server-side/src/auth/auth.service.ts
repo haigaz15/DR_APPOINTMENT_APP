@@ -16,13 +16,14 @@ export class AuthService {
         private jwtService:JwtService,
         ){}
 
-    async validateUser(signInUserDto:SignInUserDto):Promise<{accessToken:string}>{
+    async validateUser(signInUserDto:SignInUserDto):Promise<{userId:String,accessToken:string}>{
         const {username,password} = signInUserDto;
         const user = await this.usersService.findOne(username)
+        const userId = user.id
         if(user && (await bycrypt.compare(password,user.password))){
             const payload:JwtPayload = {username};
             const accessToken = await this.jwtService.sign(payload);
-            return {accessToken}
+            return {userId,accessToken}
         }else{
             throw new UnauthorizedException('Please check your login credentials');
         }

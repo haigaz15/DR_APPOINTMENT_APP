@@ -74,10 +74,10 @@ export default function BasicTable({rows}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {flag ? rows.map((row) => (
+            {flag ? rows.map((row) =>(
               <TableRow
                 key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
                 onClick={(e)=>handleDoctorClicked(e,row.id)}
               >
                 <TableCell component="th" scope="row" >
@@ -86,7 +86,7 @@ export default function BasicTable({rows}) {
                     <Grid item lg={10}>{row.firstname} {row.lastname}</Grid>
                   </Grid>
                 </TableCell>
-                <TableCell align="right">{row.specialty}</TableCell>
+                <TableCell align="right" >{row.specialty}</TableCell>
                 <TableCell align="right">{row.section.name}</TableCell>
                 <TableCell align="right">{row.hospitals[0].name}</TableCell>
                 <TableCell align="right">{row.countryOfSpecialty}</TableCell>
@@ -94,7 +94,7 @@ export default function BasicTable({rows}) {
             )): filtered.map((row) => (
               <TableRow
                 key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
                 onClick={(e)=>handleDoctorClicked(e,row.id)}
               >
                 <TableCell component="th" scope="row">

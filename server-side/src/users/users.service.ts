@@ -42,9 +42,10 @@ export class UsersService {
     }
 
     async updateUser(id:string,createUserDto:CreateUserDto):Promise<User>{
-        const {firstName,lastName,email,password} = createUserDto;
+        const {firstName,lastName,email,password,username} = createUserDto;
         const user = await this.usersRepository.findOne(id);
         user.firstName = firstName
+        user.username = username
         user.lastName = lastName
         user.email=email
         user.password = password
@@ -76,4 +77,16 @@ export class UsersService {
         return `User with id ${id} has been deleted`
     }
 
+    async uploadImage(id:string,fileName:string):Promise<Object>{
+        const user = await this.getUserById(id)
+        user.imageFile = fileName
+        this.usersRepository.save(user)
+        return {firstName:user.firstName,lastName:user.lastName}
+    }
+
+    async findImageByUserId(id:string):Promise<String>{
+        const user = await this.getUserById(id)
+        delete user.password
+        return user.imageFile
+    }
 }

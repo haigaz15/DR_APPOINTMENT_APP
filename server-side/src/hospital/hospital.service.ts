@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Doctor } from 'src/doctor/doctor.entity';
 import { Section } from 'src/section/section.entity';
 import { SectionService } from 'src/section/section.service';
 import { Repository } from 'typeorm';
@@ -8,11 +9,11 @@ import { Hospital } from './hospital.entity';
 
 @Injectable()
 export class HospitalService {
+
     constructor(
         @InjectRepository(Hospital)
         private hospitalRepository:Repository<Hospital>,
         private sectionService:SectionService,
-        
     ){}
 
     async addHospital(createHospitalDto:CreateHospitalDto):Promise<Hospital>{
@@ -31,8 +32,19 @@ export class HospitalService {
 
     async getAllHospitals():Promise<Hospital[]>{
         const quary = await this.hospitalRepository.createQueryBuilder("hospital")
+
         const  hospitals = quary.leftJoinAndSelect("hospital.sections","section").leftJoinAndSelect("hospital.doctors","doctors").getMany();
         return hospitals;
+    }
+
+    async getHospitalById(id:string,name:string): Promise<Hospital> {
+        const quary = await this.hospitalRepository.createQueryBuilder("hospital")
+        const hospital = quary.innerJoinAndSelect("hospital.sections","section", "section.name =:name",{name:name})
+        .where("hospital.id = :id",{id:id}).getOne()
+        if(!hospital){
+            throw new NotFoundException(`Hospital with Id ${id} not found`)
+        }
+        return hospital
     }
 
     async getHospitalByName(name:string):Promise<Hospital>{
@@ -46,6 +58,17 @@ export class HospitalService {
         return hospitals;
     }
     
+
+    async uploadImage(name:string,fileName:string):Promise<Object>{
+        const hospital = await this.getHospitalByName(name)
+        hospital.imageFile = fileName
+        this.hospitalRepository.save(hospital)
+        return "successfully added the image of the hospital"
+    }
     
-    
+    async findImageByHospitalName(name:string):Promise<String>{
+        const hospital = await this.getHospitalByName(name)
+        return hospital.imageFile
+    }
+
 }

@@ -8,22 +8,56 @@ import Login from './components/login/Login';
 import SignUp from './components/signup/SignUp';
 import Doctor from './components/doctor/Doctor';
 import HospitalSection from './components/hospital/HospitalSection';
+import Profile from './components/profile/Profile';
 import axios from 'axios';
 import Footer from './components/footer/Footer';
+import ProtectedRoute from './protected.route';
+
+
+
 
 function App() {
   const [open, setOpen] = React.useState(false);
   const [rows ,setRows] = useState([]);
   const [hospitals,setHospitals] = useState([]);
   const [hospitalRoute, setHospitalRoute] = useState("");
-  const [hospitaldetails,setHospitaldetails] = useState(null);
+  const [token,setToken] = useState(null)
+  const [userImage,setUserImage] = useState("");
+
+
+
+   async function displayProtectedImage(
+    imageUrl, authToken
+      ) {
+        // Fetch the image.
+
+        const response = await fetch(imageUrl, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'image/jpeg',
+              'Authorization': `Bearer ${authToken}`, // notice the Bearer before your token
+          },
+          
+      })
+        // Create an object URL from the data.
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        setUserImage(objectUrl);
+ }
 
   useEffect(() => {
     axios.get("http://localhost:4000/doctor/").then((value)=>{
-      setRows(value.data)}).catch(error=>console.log(error))
+      setRows(value.data.data)
+      console.log(value.data.data)
+    }).catch(error=>console.log(error))
     axios.get("http://localhost:4000/hospital/").then((value)=>{
       console.log(value.data)
       setHospitals(value.data)}).catch(error=>console.log(error))
+
+      if(sessionStorage.getItem('token')){
+        displayProtectedImage(`http://localhost:4000/users/image/`,sessionStorage.getItem('token'))
+      }
+
 },[])
 
   const handleOpen = (state) => {
@@ -31,13 +65,14 @@ function App() {
   }
   const hosptialRouteHandler = (value,data)=>{
     setHospitalRoute(value)
-    setHospitaldetails(data)
+    sessionStorage.setItem('hosdata',JSON.stringify(data))
   }
+
   console.log(hospitalRoute)
   return (
-    <div>
-      <Router>
-        <Header handleOpen={handleOpen}/>
+    <div style={{display:"flex", flexDirection: "column"}}>
+      <Router >
+        <Header handleOpen={handleOpen} token={token} setToken={setToken} image={userImage} />
         <Switch>
           <Route exact path="/" >
           <HomePage/>
@@ -46,7 +81,7 @@ function App() {
             <Hospitals hospitals={hospitals} hosptialRouteHandler={hosptialRouteHandler}/>
           </Route>
           <Route path="/login">
-            <Login open={open} handleClose={handleOpen}/>
+            <Login open={open} handleClose={handleOpen} setToken={setToken} />
           </Route>
           <Route path="/signup">
             <SignUp/>
@@ -54,14 +89,15 @@ function App() {
           <Route path="/doctors">
             <Doctor rows={rows}/>
           </Route>
+          <ProtectedRoute path="/profile" component={Profile}/> 
           <Route path={hospitalRoute}>
-            <HospitalSection hospitaldetails={hospitaldetails}/>
+            <HospitalSection />
           </Route>
         </Switch>
-        <Box sx={{position: "fixed",bottom: 0,left: 0,right: 0 }}>
-        <Footer />
-        </Box>
-      </Router>    
+      </Router>
+      <Box style={{marginBottom:"auto"}}>
+      <Footer />
+      </Box>
     </div>
   );
 }

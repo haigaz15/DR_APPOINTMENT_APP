@@ -13,6 +13,9 @@ export class Hospital{
     @Column()
     location:string;
 
+    @Column({nullable:true})
+    imageFile:string
+
     @ManyToMany(()=>Section, section => section.hospitals)
     @JoinTable()
     sections:Section[];

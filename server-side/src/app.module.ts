@@ -30,7 +30,6 @@ import { AppointmentModule } from './appointment/appointment.module';
     SectionModule,
     DoctorModule,
     AppointmentModule,
-    
 ],
 
   controllers: [AppController],

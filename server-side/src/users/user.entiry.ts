@@ -21,6 +21,9 @@ export class User {
     @Column()
     password:string 
 
+    @Column({nullable:true})
+    imageFile:string
+
     @OneToMany(() => Appointment, appointment => appointment.user)
     appointments?: Appointment[];
 

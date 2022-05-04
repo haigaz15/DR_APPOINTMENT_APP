@@ -2,7 +2,7 @@
 import { Container,Grid,Box,Link } from '@mui/material';
 export default function Footer() {
   return (
-    <footer>
+    <footer >
       <Box
         bgcolor="#0e5687"
         color="white"

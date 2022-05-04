@@ -1,0 +1,12 @@
+
+
+.profileContainer{
+    display: flex;
+}
+
+.dashboard{
+    flex-grow: 1;
+}
+.content{
+    flex-grow: 25;
+}

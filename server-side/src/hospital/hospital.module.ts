@@ -4,6 +4,7 @@ import { HospitalController } from './hospital.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Hospital } from './hospital.entity';
 import { SectionModule } from 'src/section/section.module';
+import { DoctorModule } from 'src/doctor/doctor.module';
 
 
 @Module({

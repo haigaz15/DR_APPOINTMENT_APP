@@ -1,0 +1,22 @@
+.editpageContainer1{
+    display: flex;
+    justify-content: space-around;
+    
+    
+}
+
+.editpageItem1{
+  margin-top: 8%;
+  margin-bottom: 8%;
+}
+
+.editpageContainer2{
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+
+}
+
+.editpageItem2{
+    margin-bottom: 8%;
+}

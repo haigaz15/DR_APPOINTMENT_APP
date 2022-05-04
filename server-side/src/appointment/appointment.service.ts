@@ -11,12 +11,19 @@ import { UpdateAppointmentDto } from './dto/updateappointment.dto';
 
 @Injectable()
 export class AppointmentService {
+
     constructor(
         @InjectRepository(Appointment)
         private appointmentRepository:Repository<Appointment>,
         private userService:UsersService,
         private doctorService:DoctorService
     ){}
+
+    async getAppointmentByUserId(userId:string): Promise<Appointment[]> {
+        const query = this.appointmentRepository.createQueryBuilder('appiontment')
+        const appiontments = await query.leftJoinAndSelect("appiontment.user","user").leftJoinAndSelect("appiontment.doctor","doctor").where('appiontment.user = :id', { id: userId }).getMany();
+        return appiontments;
+    }
 
     async getAllAppointment():Promise<Appointment[]>{
         const query = this.appointmentRepository.createQueryBuilder('appiontment')

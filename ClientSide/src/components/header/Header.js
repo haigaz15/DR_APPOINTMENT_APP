@@ -1,6 +1,6 @@
 
-import React from 'react';
-import {Box,Button,AppBar,Toolbar, Typography,MenuItem,Menu} from '@mui/material';
+import React, { useEffect } from 'react';
+import {Box,Button,AppBar,Toolbar, Typography,MenuItem,Menu, Avatar} from '@mui/material';
 import { Link,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import IconButton from '@mui/material/IconButton';
@@ -8,10 +8,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import axios from 'axios';
 
-const Header = (props) => {
+const Header = ({handleOpen,image}) => {
     const history = useHistory()
     const handleLogin = () => {
-        props.handleOpen(true)
+        handleOpen(true)
         history.push('/login')
     }
     const handleHome = () =>{
@@ -19,6 +19,10 @@ const Header = (props) => {
         then((res)=>{
             console.log(res)
         })
+    }
+
+    const handleProfile = () => {
+        history.push('/profile')
     }
 
     const pages = [
@@ -31,7 +35,7 @@ const Header = (props) => {
 
     
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+    
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -42,6 +46,15 @@ const Header = (props) => {
         setAnchorElNav(false);
     };
 
+
+
+    const handleProfileChange = () => {
+        if(sessionStorage.getItem('token')){
+            return(<Avatar src={image}  onClick={handleProfile}></Avatar>)
+        }else{
+            return(<Button color="inherit" ><span style={{color:"white"}} onClick={handleLogin}> Login</span></Button>)
+        }
+    }
 
 
     return(
@@ -85,7 +98,7 @@ const Header = (props) => {
                             <Button color="inherit"><Link to={page.route} style={{ textDecoration: 'none' ,color:"white" }}>{page.value}</Link></Button>
                     ))}
                 </Box>
-                <Button color="inherit" ><span style={{color:"white"}} onClick={handleLogin}> Login</span></Button>
+                {handleProfileChange()} 
                 </Toolbar>           
             </AppBar>
         </Box>

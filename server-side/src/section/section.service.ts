@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateSectionDto } from './dto/create-section.dto';
@@ -27,6 +27,15 @@ export class SectionService {
         const query = this.sectionRepository.createQueryBuilder('section');
         const sections = await query.leftJoinAndSelect("section.hospitals","hospital").leftJoinAndSelect("section.doctors","doctor").getMany();
         return sections
+    }
+
+    async getSectionById(id:string):Promise<Section>{
+        const query = this.sectionRepository.createQueryBuilder('section');
+        const section = await query.leftJoinAndSelect("section.doctors","doctor").where("section.id = :id",{id:id}).getOne()
+        if(!section){
+            throw new NotFoundException(`Section with Id ${id} not found`)
+        }
+        return section
     }
 
     async getSection(name:string):Promise<Section>{

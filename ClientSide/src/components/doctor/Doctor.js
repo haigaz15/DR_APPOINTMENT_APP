@@ -6,6 +6,7 @@ import './Doctor.css'
 
 
 const Doctor = ({rows}) => {
+    console.log(rows)
 
     return(
         <div className="item2"><BasicTable rows={rows} /></div>

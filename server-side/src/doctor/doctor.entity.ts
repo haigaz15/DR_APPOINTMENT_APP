@@ -34,6 +34,9 @@ export class Doctor{
     @Column()
     bio:string
 
+    @Column({nullable:true})
+    imageFile:string
+
     @ManyToOne(()=> Section, section => section.doctors)
     section:Section;
 

@@ -2,17 +2,19 @@
 import React from 'react';
 import {Card,CardActions,Button,CardContent,CardMedia,Typography} from '@mui/material'
 
-  const NewCard = ({data,handleOpenHospital,hosptialRouteHandler}) => {
-
+  const NewCard = ({data,handleOpenHospital,hosptialRouteHandler,image}) => {
     const handleClicked = () =>{
       hosptialRouteHandler(`/${data.name.toLowerCase().replace(/\s+/g, '')}`,data)
+      console.log(data)
       handleOpenHospital(`/${data.name.toLowerCase().replace(/\s+/g, '')}`)
     }
     return(
       <Card>
-        <CardMedia
+        <CardMedia 
+        sx={{"&.MuiCardMedia-img":{width:"300px",margin:"auto"}}}
         component="img"
         height="140"
+        image={image}
         alt={data.name}
         />
             <CardContent>
