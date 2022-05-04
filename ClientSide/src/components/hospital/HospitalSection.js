@@ -10,18 +10,15 @@ const HospitalSection = () => {
     const [openSection, setOpenSection] = useState(false);
     const [doctors,setDoctors] = useState([]);
 
-    useEffect(()=>{
-        axios.get(`http://localhost:4000/doctor/${hospitaldetails.id}/`).then((value)=>{
-            let result = value.data;
-            setDoctors(result)
-        })
-    },[])
     
 
     const openTheSection = (section) => {
-        setOpenSection(true)
-        let result = doctors.filter(doctor => doctor.section.name === section.name)
-        setDoctors(result);
+         setOpenSection(true)
+        axios.get(`http://localhost:4000/doctor/${hospitaldetails.id}/${section.id}`).then((value)=>{
+            let result = value.data;
+            console.log(result)
+            setDoctors(result)
+        })
     }
 
      return(

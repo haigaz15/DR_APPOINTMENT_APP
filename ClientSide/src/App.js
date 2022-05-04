@@ -23,7 +23,8 @@ function App() {
   const [hospitalRoute, setHospitalRoute] = useState("");
   const [token,setToken] = useState(null)
   const [userImage,setUserImage] = useState("");
-
+  const [doctorPage,setDoctorPage] = useState(1);
+  const [lastPage,setLastPage] = useState(1000);
 
 
    async function displayProtectedImage(
@@ -45,10 +46,13 @@ function App() {
         setUserImage(objectUrl);
  }
 
+
   useEffect(() => {
-    axios.get("http://localhost:4000/doctor/").then((value)=>{
+    axios.get(`http://localhost:4000/doctor/?page=${doctorPage}`).then((value)=>{
+      console.log(doctorPage)
       setRows(value.data.data)
-      console.log(value.data.data)
+      setLastPage(value.data.last_page)
+      console.log(value.data)
     }).catch(error=>console.log(error))
     axios.get("http://localhost:4000/hospital/").then((value)=>{
       console.log(value.data)
@@ -58,7 +62,7 @@ function App() {
         displayProtectedImage(`http://localhost:4000/users/image/`,sessionStorage.getItem('token'))
       }
 
-},[])
+},[doctorPage])
 
   const handleOpen = (state) => {
     setOpen(state)
@@ -66,6 +70,10 @@ function App() {
   const hosptialRouteHandler = (value,data)=>{
     setHospitalRoute(value)
     sessionStorage.setItem('hosdata',JSON.stringify(data))
+  }
+
+  const handleDoctorPageChange = (page) => {
+    setDoctorPage(page)
   }
 
   console.log(hospitalRoute)
@@ -87,7 +95,7 @@ function App() {
             <SignUp/>
             </Route>
           <Route path="/doctors">
-            <Doctor rows={rows}/>
+            <Doctor rows={rows} page={doctorPage} handleDoctorPageChange={handleDoctorPageChange} lastPage={lastPage}/>
           </Route>
           <ProtectedRoute path="/profile" component={Profile}/> 
           <Route path={hospitalRoute}>

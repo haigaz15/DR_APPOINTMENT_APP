@@ -7,13 +7,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
-import { Grid,TextField } from '@mui/material';
+import { Grid,Box,TextField, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import Appoitment from '../appoitment/Appoitment';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-export default function BasicTable({rows}) {
+export default function BasicTable({rows,page,handleDoctorPageChange, lastPage}) {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -21,8 +23,6 @@ export default function BasicTable({rows}) {
   const [filtered,setFiltered] = React.useState([]);
   const [flag,setFlag] = React.useState(true)
   const [clickedDoctor,setClickedDoctor] = useState({});
-
-
   const searchResult = (e)=>{
     const filterRows = rows.filter((row)=>{
       return (
@@ -43,7 +43,24 @@ export default function BasicTable({rows}) {
     let filtered = rows.filter((row)=>{return row.id === id});
     setClickedDoctor(filtered[0]);
   }
-  
+  const handleForwardArrow = ()=> {
+    let newPage = page + 1
+    if(newPage > lastPage){
+      newPage = lastPage
+      handleDoctorPageChange(newPage)
+    }else{
+      handleDoctorPageChange(newPage)
+    }
+  }
+  const handleBackwaredArrow = ()=> {
+    let newPage = page - 1
+    if(newPage < 1){
+      newPage = 1
+      handleDoctorPageChange(newPage)
+    }else{
+      handleDoctorPageChange(newPage)
+    }
+  }
   return (
     <Paper elevation={20}>
       <Grid container direction="column" alignItems="center" justify="center">
@@ -91,6 +108,7 @@ export default function BasicTable({rows}) {
                 <TableCell align="right">{row.hospitals[0].name}</TableCell>
                 <TableCell align="right">{row.countryOfSpecialty}</TableCell>
               </TableRow>
+             
             )): filtered.map((row) => (
               <TableRow
                 key={row.id}
@@ -110,6 +128,14 @@ export default function BasicTable({rows}) {
               </TableRow>))}
           </TableBody>
         </Table>
+        <Box sx={{display:"flex",justifyContent:"center"}}>
+        <Tooltip title="previous page">
+        <IconButton onClick={handleBackwaredArrow}><ArrowBackIosIcon/></IconButton>
+        </Tooltip>
+        <Tooltip title="next page">
+        <IconButton onClick={handleForwardArrow}><ArrowForwardIosIcon/></IconButton>
+        </Tooltip>
+        </Box>
       </TableContainer>
       <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
     </Paper>

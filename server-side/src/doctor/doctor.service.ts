@@ -46,14 +46,16 @@ export class DoctorService {
              data: await doctors.getMany(),
              total,
              page,
+             perPage,
              last_page:Math.ceil(total/perPage)
             };
      }
 
-     async findDoctorByHosBySec(hosId:string):Promise<Doctor[]>{
+     async findDoctorByHosBySec(hosId:string,secId):Promise<Doctor[]>{
         const query = this.doctorRepository.createQueryBuilder('doctor');
         const doctor = await query
-        .innerJoinAndSelect("doctor.hospitals","hospital","hospital.id =:id",{id:hosId}).leftJoinAndSelect("doctor.section","section").getMany()
+        .innerJoinAndSelect("doctor.hospitals","hospital","hospital.id =:hosid",{hosid:hosId})
+        .innerJoinAndSelect("doctor.section","section","section.id =:secid",{secid:secId}).getMany()
         return doctor;
     }
 

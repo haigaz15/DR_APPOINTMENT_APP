@@ -19,9 +19,9 @@ export class DoctorController {
         return this.doctorService.getAllDoctors(req)
     }
 
-    @Get('/:hosId')
-    async findDoctorByhands(@Param('hosId') hosId:string):Promise<Doctor[]>{
-        return this.doctorService.findDoctorByHosBySec(hosId);
+    @Get('/:hosId/:secId')
+    async findDoctorByhands(@Param('hosId') hosId:string, @Param('secId') secId:string):Promise<Doctor[]>{
+        return this.doctorService.findDoctorByHosBySec(hosId,secId);
     }
 
     @Post()
@@ -33,6 +33,8 @@ export class DoctorController {
     deleteDoctor(@Param('id') id:string):Promise<String>{
         return this.doctorService.deleteDoctor(id);
     }
+
+
 
     @Post('imageupload')
     @UseGuards(JwtAuthGuard2)
