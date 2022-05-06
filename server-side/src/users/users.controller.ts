@@ -51,9 +51,7 @@ export class UsersController {
     @UseInterceptors(FileInterceptor('file',saveImageToStorage))
     uploadImage(@UploadedFile() file: Express.Multer.File,@Req() req ):any{
         const fileName = file?.filename;
-        console.log(fileName)
-        console.log(req)
-        if(!fileName)  throw new HttpException('type must be either jpg,png or jpeg',500 );
+        if(!fileName)  throw new HttpException('type must be either jpg,png or jpeg',500);
         const userId = req.user.id
         return this.usersService.uploadImage(userId,fileName)
     }   

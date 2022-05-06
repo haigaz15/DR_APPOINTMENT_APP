@@ -1,5 +1,6 @@
-import { Body, Controller, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard3 } from 'src/auth/JwtAuthGaurd3';
 import { saveImageToStorage } from 'src/helpers/image-storage';
 import { Section } from 'src/section/section.entity';
 import { CreateHospitalDto } from './dto/create-hospital.dto';
@@ -36,6 +37,7 @@ export class HospitalController {
         return this.hospitalService.uploadImage(name,fileName)
     }
 
+    @UseGuards(JwtAuthGuard3)
     @Post()
     addHospital(@Body() createHospitalDto:CreateHospitalDto):Promise<Hospital>{
         return this.hospitalService.addHospital(createHospitalDto)

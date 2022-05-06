@@ -8,6 +8,7 @@ import { HospitalModule } from './hospital/hospital.module';
 import { SectionModule } from './section/section.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { AppointmentModule } from './appointment/appointment.module';
+import { AdminModule } from './admin/admin.module';
 
 
 
@@ -30,6 +31,7 @@ import { AppointmentModule } from './appointment/appointment.module';
     SectionModule,
     DoctorModule,
     AppointmentModule,
+    AdminModule,
 ],
 
   controllers: [AppController],

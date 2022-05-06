@@ -28,8 +28,11 @@ const Page = () => {
   },[])
 
   const handleImageUpload = (e) =>{
+     let file = new FormData()
+     file.append('file',e.target.files[0])
+    // file.append(e.target.files[0].name,e.target.files[0])
     console.log(e.target.files[0])
-    setUploadedImage(e.target.files[0])
+    setUploadedImage(file)
   }
 
    async function postImage (file){
@@ -38,7 +41,7 @@ const Page = () => {
       headers: {
         'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
       },
-      body:file
+      body:file,
       }).then(
         response => response.json() // if the response is a JSON object
       ).then(
@@ -49,16 +52,9 @@ const Page = () => {
   }
    const  updateImage = (e) =>{
      e.preventDefault();
-    //const file = new FormData()
     console.log(uploadedImage)
-    // //file.append('image',uploadedImage,uploadedImage.name)
-    // axios.post(`http://localhost:4000/users/imageupload/`,uploadedImage,{
-    //   headers: {
-    //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
-    //    }
-    // }).then((res) => {console.log(res)}).catch((error)=>{console.log(error)})
     postImage(uploadedImage)
-
+    window.location.reload()
   }
     return(
         <Paper sx={{width:860,marginTop:2}} elevation={24}>
