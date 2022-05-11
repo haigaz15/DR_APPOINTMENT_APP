@@ -6,6 +6,7 @@ import { Doctor } from './doctor.entity';
 import { DoctorService } from './doctor.service';
 import { AddDoctorDto } from './dto/adddoctor.dto';
 import { Request } from 'express';
+import { JwtAuthGuard3 } from 'src/auth/JwtAuthGaurd3';
 
 
 @Controller('doctor')
@@ -24,11 +25,13 @@ export class DoctorController {
         return this.doctorService.findDoctorByHosBySec(hosId,secId);
     }
 
+    @UseGuards(JwtAuthGuard3)
     @Post()
     addDoctor(@Body() addDoctorDto:AddDoctorDto):Promise<Doctor>{
         return this.doctorService.addDoctor(addDoctorDto);
     }
 
+    @UseGuards(JwtAuthGuard3)
     @Delete('/:id')
     deleteDoctor(@Param('id') id:string):Promise<String>{
         return this.doctorService.deleteDoctor(id);

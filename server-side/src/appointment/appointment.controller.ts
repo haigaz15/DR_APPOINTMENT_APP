@@ -35,8 +35,9 @@ export class AppointmentController {
 
     @UseGuards(JwtAuthGuard2)
     @Patch('/:id')
-    updateAppointment(@Param('id') appointmentId:string, @Body() updateAppointmentDto:UpdateAppointmentDto):Promise<Appointment>{
-        return this.appointmentService.updateAppointment(appointmentId,updateAppointmentDto)
+    updateAppointment(@Param('id') appointmentId:string, @Body() updateAppointmentDto:UpdateAppointmentDto,@Req() req):Promise<Appointment>{
+        const signedInDoctorID = req.user.id
+        return this.appointmentService.updateAppointment(appointmentId,updateAppointmentDto,signedInDoctorID)
     }
 }
 

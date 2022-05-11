@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorService } from 'src/doctor/doctor.service';
 import { UsersService } from 'src/users/users.service';
@@ -27,7 +27,7 @@ export class AppointmentService {
 
     async getAllAppointment():Promise<Appointment[]>{
         const query = this.appointmentRepository.createQueryBuilder('appiontment')
-        const appiontments = await query.getMany();
+        const appiontments = await query.leftJoinAndSelect("appiontment.doctor","doctor").getMany();
         return appiontments;
     }
     
@@ -44,12 +44,16 @@ export class AppointmentService {
         return await this.appointmentRepository.save(appointment)
     }
 
-    async updateAppointment(appointmentId:string,updateAppointmentDto:UpdateAppointmentDto):Promise<Appointment>{
+    async updateAppointment(appointmentId:string,updateAppointmentDto:UpdateAppointmentDto,signedInDoctorID):Promise<Appointment>{
         const {appointmentstatus} = updateAppointmentDto
-        const appointment = await this.appointmentRepository.findOne(appointmentId)
-        console.log(appointmentstatus)
-        appointment.appointmentstatus= appointmentstatus
-        return await this.appointmentRepository.save(appointment)
+        const query = this.appointmentRepository.createQueryBuilder("appointment");
+        const appointment = await query.leftJoinAndSelect("appointment.doctor","doctor").where("appointment.id =:id",{id:appointmentId}).getOneOrFail()
+        if(signedInDoctorID === appointment.doctor.id){
+            appointment.appointmentstatus= appointmentstatus
+            return await this.appointmentRepository.save(appointment)
+        }
+        throw new UnauthorizedException("You are not authorized Doctor")
+
     }
 
 }

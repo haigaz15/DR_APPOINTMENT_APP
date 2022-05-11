@@ -37,7 +37,7 @@ export class DoctorService {
          .leftJoinAndSelect("doctor.hospitals","hospitals")
 
          const page:number = parseInt(req.query.page as any) || 1;
-         const perPage = 3;
+         const perPage = 9;
          const total = await doctors.getCount();
 
          doctors.offset((page - 1)*perPage).limit(perPage);

@@ -29,6 +29,7 @@ export class HospitalController {
         return this.hospitalService.getHospitalById(id,name)
     }
 
+    @UseGuards(JwtAuthGuard3)
     @Post('imageupload/:name')
     @UseInterceptors(FileInterceptor('file',saveImageToStorage))
     uploadImage(@UploadedFile()file: Express.Multer.File, @Param('name') name:string):any{
