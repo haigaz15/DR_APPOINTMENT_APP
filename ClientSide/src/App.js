@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import HomePage from './components/homePage/HomePage';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route,useLocation } from 'react-router-dom';
 import {Box} from '@mui/material'
 import Hospitals from './components/hospital/Hospitals';
 import Header from './components/header/Header';
@@ -12,15 +12,14 @@ import Profile from './components/profile/Profile';
 import axios from 'axios';
 import Footer from './components/footer/Footer';
 import ProtectedRoute from './protected.route';
-
-
+import SectionDoctor from './components/section/SectionDoctor';
+import NotFound from './components/ErroPage/NotFound';
 
 
 function App() {
   const [open, setOpen] = React.useState(false);
   const [rows ,setRows] = useState([]);
   const [hospitals,setHospitals] = useState([]);
-  const [hospitalRoute, setHospitalRoute] = useState("");
   const [token,setToken] = useState(null)
   const [userImage,setUserImage] = useState("");
   const [doctorPage,setDoctorPage] = useState(1);
@@ -63,30 +62,36 @@ function App() {
       }
 
 },[doctorPage])
+  
 
   const handleOpen = (state) => {
     setOpen(state)
   }
-  const hosptialRouteHandler = (value,data)=>{
-    setHospitalRoute(value)
-    sessionStorage.setItem('hosdata',JSON.stringify(data))
-  }
+
 
   const handleDoctorPageChange = (page) => {
     setDoctorPage(page)
   }
 
-  console.log(hospitalRoute)
+
+  const location = useLocation()
+
   return (
-    <div style={{display:"flex", flexDirection: "column"}}>
-      <Router >
+    <div style={{display:"flex", flexDirection: "column" }}>
+      
         <Header handleOpen={handleOpen} token={token} setToken={setToken} image={userImage} />
         <Switch>
           <Route exact path="/" >
           <HomePage/>
           </Route>
-          <Route path ="/hospitals">
-            <Hospitals hospitals={hospitals} hosptialRouteHandler={hosptialRouteHandler}/>
+          <Route exact path ="/hospitals">
+            <Hospitals hospitals={hospitals} />
+          </Route>
+          <Route exact path="/hospitals/:name">
+            <HospitalSection/>
+          </Route>
+          <Route path="/hospitals/:name/:doctorname">
+            <SectionDoctor doctor={location.state}/>
           </Route>
           <Route path="/login">
             <Login open={open} handleClose={handleOpen} setToken={setToken} />
@@ -97,12 +102,10 @@ function App() {
           <Route path="/doctors">
             <Doctor rows={rows} page={doctorPage} handleDoctorPageChange={handleDoctorPageChange} lastPage={lastPage}/>
           </Route>
-          <ProtectedRoute path="/profile" component={Profile}/> 
-          <Route path={hospitalRoute}>
-            <HospitalSection />
-          </Route>
+          <ProtectedRoute path="/profile" component={Profile}/>
+          <Route path="*" component={NotFound} />
         </Switch>
-      </Router>
+
       <Box style={{marginBottom:"auto"}}>
       <Footer />
       </Box>

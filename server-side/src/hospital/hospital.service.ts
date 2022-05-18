@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from 'src/doctor/doctor.entity';
 import { Section } from 'src/section/section.entity';
@@ -18,6 +18,10 @@ export class HospitalService {
 
     async addHospital(createHospitalDto:CreateHospitalDto):Promise<Hospital>{
          const {name,location} = createHospitalDto;
+         const hospital = this.getHospitalByName(name)
+         if(hospital){
+             throw new ConflictException('Hospital name already exists ')
+         }else{
          const sections = await this.sectionService.getAllSection();
          const hospital = this.hospitalRepository.create({
             name:name,
@@ -27,7 +31,7 @@ export class HospitalService {
         
         await this.hospitalRepository.save(hospital)
         return hospital;
-        
+        }
     }
 
     async getAllHospitals():Promise<Hospital[]>{

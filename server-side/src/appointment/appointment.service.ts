@@ -47,7 +47,8 @@ export class AppointmentService {
     async updateAppointment(appointmentId:string,updateAppointmentDto:UpdateAppointmentDto,signedInDoctorID):Promise<Appointment>{
         const {appointmentstatus} = updateAppointmentDto
         const query = this.appointmentRepository.createQueryBuilder("appointment");
-        const appointment = await query.leftJoinAndSelect("appointment.doctor","doctor").where("appointment.id =:id",{id:appointmentId}).getOneOrFail()
+        const appointment = await query.leftJoinAndSelect("appointment.doctor","doctor")
+        .where("appointment.id =:id",{id:appointmentId}).getOneOrFail()
         if(signedInDoctorID === appointment.doctor.id){
             appointment.appointmentstatus= appointmentstatus
             return await this.appointmentRepository.save(appointment)

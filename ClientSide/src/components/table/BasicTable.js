@@ -15,6 +15,8 @@ import Appoitment from '../appoitment/Appoitment';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+
+
 export default function BasicTable({rows,page,handleDoctorPageChange, lastPage}) {
 
   const [open, setOpen] = useState(false);

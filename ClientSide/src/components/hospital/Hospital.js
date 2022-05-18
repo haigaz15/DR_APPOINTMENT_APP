@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import NewCard from '../card/NewCard';
 import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
-const Hospital = ({data,hosptialRouteHandler}) => {
+const Hospital = ({data}) => {
      const history = useHistory()
      const [image,setImage] = useState(null)
      const handleOpenHospital = (ob) => {
@@ -18,15 +18,11 @@ const Hospital = ({data,hosptialRouteHandler}) => {
         };
 
      useEffect(()=>{
-          // axios.get(`http://localhost:4000/hospital/image/${data.name}`).then((res)=>{
-          //      setImage(res.config.url)
-          // })
-
           fetchImage();
      },[])
      return( 
       <div style={{width:"450px",marginLeft:"2%",marginTop:"2%",marginBottom:"2%"}}>
-       <NewCard data= {data} handleOpenHospital={handleOpenHospital} hosptialRouteHandler={hosptialRouteHandler} image={image}/>
+       <NewCard data= {data} handleOpenHospital={handleOpenHospital}  image={image}/>
        </div>
      )
 }

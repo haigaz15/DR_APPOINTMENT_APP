@@ -10,6 +10,7 @@ import { AppointmentModule } from 'src/appointment/appointment.module';
 import { JwtStrategy1 } from './jwt.strategy1';
 import { AdminModule } from 'src/admin/admin.module';
 import { JwtStrategy2 } from './jwt.strategy2';
+import { jwtConstants } from './jwtConstants';
 
 
 @Module({
@@ -18,7 +19,7 @@ import { JwtStrategy2 } from './jwt.strategy2';
     
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({
-      secret:'topSecret',      
+      secret:jwtConstants.secret,      
       signOptions: {
         expiresIn: '1d',
       },

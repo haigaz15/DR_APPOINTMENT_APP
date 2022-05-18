@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+import {  ThemeProvider, createTheme } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,12 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import Settings from '@mui/icons-material/Settings';
 import People from '@mui/icons-material/People';
-import PermMedia from '@mui/icons-material/PermMedia';
 import Dns from '@mui/icons-material/Dns';
-import Public from '@mui/icons-material/Public';
 import { useHistory } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const data = [
     { icon: <People />, label: 'Profile Page',route:'/profile/page' },
@@ -31,6 +28,12 @@ const Dashboard = () =>{
 
 const [open, setOpen] = React.useState(true);
 const history = useHistory();
+
+const handlelogout = () => {
+  sessionStorage.removeItem("token")
+  sessionStorage.removeItem("userId")
+  window.location.reload()
+}
 
   return (
     <Box sx={{ display: 'flex'}}>
@@ -62,7 +65,7 @@ const history = useHistory();
                   }}
                 />
               </ListItemButton>
-              <Tooltip title="Project Settings">
+              <Tooltip title="Logout">
                 <IconButton
                   size="large"
                   sx={{
@@ -71,16 +74,7 @@ const history = useHistory();
                       transition: '0.2s',
                       transform: 'translateX(0) rotate(0)',
                     },
-                    '&:hover, &:focus': {
-                      bgcolor: 'unset',
-                      '& svg:first-of-type': {
-                        transform: 'translateX(-4px) rotate(-20deg)',
-                      },
-                      '& svg:last-of-type': {
-                        right: 0,
-                        opacity: 1,
-                      },
-                    },
+
                     '&:after': {
                       content: '""',
                       position: 'absolute',
@@ -91,8 +85,9 @@ const history = useHistory();
                       bgcolor: 'divider',
                     },
                   }}
+                  onClick={handlelogout}
                 >
-                  <Settings />
+                  <LogoutIcon />
                   <ArrowRight sx={{ position: 'absolute', right: 4, opacity: 0 }} />
                 </IconButton>
               </Tooltip>

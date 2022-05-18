@@ -21,7 +21,7 @@ const Sections = ({open,doctors,handleClose}) => {
            
            <div style={{display:"flex",justifyContent:"center",flexWrap: 'wrap',outline:0,marginTop:"5%"}}>
            <Tooltip title="close section"><Box sx={{transform: "scale(1.8)",marginLeft:'90%' }}><IconButton onClick={closeSection} ><CancelIcon sx={{color:"#0e5687"}}/></IconButton></Box></Tooltip>
-           {doctors.map((doctor) => {return <Section doctor={doctor}/>})}
+           {doctors.map((doctor) => {return <Section doctor={doctor} />})}
            </div>
         </Modal>
     </div>

@@ -20,6 +20,12 @@ export class DoctorController {
         return this.doctorService.getAllDoctors(req)
     }
 
+    @Get("image/:id")
+    async findImageByUserId(@Param("id") doctorId:string, @Res() res):Promise<any>{
+        const image = await this.doctorService.findImageByDoctorId(doctorId)
+        return res.sendFile(image,{root:'./images'})
+    }
+
     @Get('/:hosId/:secId')
     async findDoctorByhands(@Param('hosId') hosId:string, @Param('secId') secId:string):Promise<Doctor[]>{
         return this.doctorService.findDoctorByHosBySec(hosId,secId);
@@ -51,12 +57,6 @@ export class DoctorController {
     }
 
 
-    @UseGuards(JwtAuthGuard2)
-    @Get("image")
-    async findImageByUserId(@Req()req, @Res() res):Promise<any>{
-        const doctorId = req.user.id
-        const image = await this.doctorService.findImageByDoctorId(doctorId)
-        return res.sendFile(image,{root:'./images'})
-    }
+
 
 }

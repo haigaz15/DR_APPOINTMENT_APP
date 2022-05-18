@@ -4,6 +4,7 @@ import axios from 'axios';
 import Sections from '../section/Sections';
 
 
+
 const HospitalSection = () => {
 
     const [hospitaldetails,setHosDetails] = useState(JSON.parse(sessionStorage.getItem('hosdata')))
@@ -13,7 +14,16 @@ const HospitalSection = () => {
     const handleClose = () =>{
         setOpenSection(false)
     }
-    
+     const style = {   
+            marginTop:"2%", 
+            bgcolor:'#0e5687',
+            opacity:0.8,
+            color:'white',
+            borderRadius:5,
+            padding:1,
+            width:900,
+            textAlign:"center"
+        }
 
     const openTheSection = (section) => {
          setOpenSection(true)
@@ -26,8 +36,8 @@ const HospitalSection = () => {
 
      return(
          <div >
-         <Paper><h1>{hospitaldetails.name} </h1> </Paper>
-         <Paper sx={{marginTop:"2%"}}><h2> {hospitaldetails.location}</h2></Paper>
+         <Paper sx={style}><h1>{hospitaldetails.name} </h1> </Paper>
+         <Paper sx={style}><h2> {hospitaldetails.location}</h2></Paper>
          <div style={{height:"300px"}}></div>
          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{marginBottom:"2%"}} >
              {
@@ -40,7 +50,7 @@ const HospitalSection = () => {
          )
              }
          </Grid>
-         <Sections open={openSection} doctors={doctors} handleClose={handleClose}/>
+         <Sections open={openSection} doctors={doctors} handleClose={handleClose} />
          </div>
      )
 }

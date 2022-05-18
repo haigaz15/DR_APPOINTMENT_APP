@@ -5,6 +5,7 @@ import { Admin } from "src/admin/admin.entity";
 import { AdminService } from "src/admin/admin.service";
 
 import {  JwtPayload2 } from "./jwt-payload.interface";
+import { jwtConstants } from "./jwtConstants";
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class JwtStrategy2 extends PassportStrategy(Strategy,'strategy_jwt_3'){
         private adminService:AdminService)
         {
         super({
-            secretOrKey:'topSecret',
+            secretOrKey:jwtConstants.secret,
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
         });
     }

@@ -1,0 +1,26 @@
+.secDocCont{
+    display: flex;
+    align-items: center
+}
+
+.item1{
+    margin-top: -2%;
+}
+
+.item2{
+    margin-top: 2%;
+}
+
+.secCont2{
+    display: flex;
+    align-items: flex-end;
+}
+
+.item1-1{
+    flex-grow: 1;
+}
+
+.item1-2{
+    margin-top: 3%;
+    margin-right: 7%;
+}

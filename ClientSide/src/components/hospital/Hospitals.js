@@ -2,12 +2,12 @@ import React,{useState} from "react";
 import Hospital from "./Hospital";
 
 
-const Hospitals = ({hospitals,hosptialRouteHandler}) => {
+const Hospitals = ({hospitals}) => {
 
     
     return(
     <div style={{display:"flex",justifyContent:"center",flexWrap: 'wrap'}}>
-        {hospitals.map((hospital) => <Hospital data={hospital} hosptialRouteHandler={hosptialRouteHandler}/>)}
+        {hospitals.map((hospital) => <Hospital data={hospital} />)}
     </div>
     )
 }

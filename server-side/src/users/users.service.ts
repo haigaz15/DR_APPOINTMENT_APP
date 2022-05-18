@@ -27,18 +27,23 @@ export class UsersService {
      
     async createUser(createUserDto:CreateUserDto):Promise<User>{
         const {firstName,lastName,email,username,password} = createUserDto;
-        const salt = await bycrypt.genSalt();
-        const hashedPassword = await bycrypt.hash(password,salt)
+        const user  = this.findOne(username)
+        if(user){
+            throw new ConflictException('User already exists ') 
+        }else{
+            const salt = await bycrypt.genSalt();
+            const hashedPassword = await bycrypt.hash(password,salt)
 
-        const user = this.usersRepository.create({
-            firstName:firstName,
-            lastName:lastName,
-            email:email,
-            username:username,
-            password:hashedPassword
-        })
-        await this.usersRepository.save(user);
-        return user
+            const user = this.usersRepository.create({
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                username:username,
+                password:hashedPassword
+            })
+            await this.usersRepository.save(user);
+            return user
+       }
     }
 
     async updateUser(id:string,createUserDto:CreateUserDto):Promise<User>{

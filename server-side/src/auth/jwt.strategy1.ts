@@ -4,6 +4,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { Doctor } from "src/doctor/doctor.entity";
 import { DoctorService } from "src/doctor/doctor.service";
 import { JwtPayload1 } from "./jwt-payload.interface";
+import { jwtConstants } from "./jwtConstants";
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class JwtStrategy1 extends PassportStrategy(Strategy,'strategy_jwt_2'){
         private doctorService:DoctorService)
         {
         super({
-            secretOrKey:'topSecret',
+            secretOrKey: jwtConstants.secret,
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
         });
     }

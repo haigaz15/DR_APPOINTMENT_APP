@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateSectionDto } from './dto/create-section.dto';
@@ -15,12 +15,17 @@ export class SectionService {
     async addSection(createSectionDto:CreateSectionDto):Promise<Section>{
 
         const {name} = createSectionDto
+        const section = this.getSection(name)
+        if(section){
+            throw new ConflictException('Section already exists ')
+        }else{
         const section = this.sectionRepository.create({
             name:name,
             
         })
         await this.sectionRepository.save(section);
         return section
+       }
     }
 
     async getAllSection():Promise<Section[]>{
