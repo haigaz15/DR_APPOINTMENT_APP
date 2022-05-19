@@ -25,9 +25,9 @@ export class UsersService {
         return user;
     }
      
-    async createUser(createUserDto:CreateUserDto):Promise<User>{
+    async createUser(createUserDto:CreateUserDto):Promise<String>{
         const {firstName,lastName,email,username,password} = createUserDto;
-        const user  = this.findOne(username)
+        const user  = await this.findOne(username)
         if(user){
             throw new ConflictException('User already exists ') 
         }else{
@@ -42,26 +42,27 @@ export class UsersService {
                 password:hashedPassword
             })
             await this.usersRepository.save(user);
-            return user
+            return ` user with id ${user.id} & username ${user.username} is created`
        }
     }
 
-    async updateUser(id:string,createUserDto:CreateUserDto):Promise<User>{
+    async updateUser(id:string,createUserDto:CreateUserDto):Promise<String>{
         const {firstName,lastName,email,password,username} = createUserDto;
         const user = await this.usersRepository.findOne(id);
+        const salt = await bycrypt.genSalt();
+        const hashedPassword = await bycrypt.hash(password,salt)
         user.firstName = firstName
         user.username = username
         user.lastName = lastName
         user.email=email
-        user.password = password
+        user.password = hashedPassword
 
         try{
             await this.usersRepository.save(user)
+            return `user with id ${user.id} & username ${user.username} is created`
         }catch(error){
             throw new ConflictException('Username already exists ')
         } 
-
-        return user
     }
     
     async getUserById(id:string):Promise<User>{

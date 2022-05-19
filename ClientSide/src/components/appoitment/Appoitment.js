@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Avatar,Button } from '@mui/material';
-import { List,ListItem,ListItemText,Divider,TextField } from '@mui/material';
+import { List,ListItem,ListItemText,Divider,TextField,Alert,AlertTitle } from '@mui/material';
 import { DateTimePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import axios from 'axios';
+import Register from '../ErroPage/Register';
 
 const style = {
     position: 'absolute',
@@ -29,49 +30,55 @@ const style = {
 
 
 
-const Appoitment = ({open,handleClose,doctor}) => {
+const Appoitment = ({open,handleClose,doctor,setOpenAppointment}) => {
     const userId = sessionStorage.getItem('userId')
 
     const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
     const [user,setUser] = React.useState(null);
 
+    const [openReModal,setopenReModal] = React.useState(false);
+    const [success,setSuccess] = React.useState(false);
+
     const handleChange = (newValue) => {
       setValue(newValue);
     };
 
-    // React.useEffect(()=>{
-    //     axios.get(`http://localhost:4000/users/${window.sessionStorage.getItem('userId')}`,{
-    //         headers:{
-    //             'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
-    //           }
-    //     }).then((value)=>{
-    //         setUser(value.data)
-    //     }).catch((value)=>{
-    //         console.log(value)
-    //     })
-    // },[])
-  
+    const handleCloseRegisterModal = () => setopenReModal(false);
+
+
     const handleSubmit = (e) =>{
-        axios.post(`http://localhost:4000/appointment`,{
-            
-                userId:window.sessionStorage.getItem('userId'),
-                doctorId:doctor.id,
-                appointmentstatus:"pending",
-                date:value
-            
-            
-        },{
-            headers:{
-                'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
-            } 
-        }).then((value)=>{
-            console.log(value)
-        }).catch((value)=>{
-            console.log(value)
-        })
+      if(sessionStorage.getItem("token")){
+            axios.post(`http://localhost:4000/appointment`,{
+                
+                    userId:window.sessionStorage.getItem('userId'),
+                    doctorId:doctor.id,
+                    appointmentstatus:"pending",
+                    date:value
+                
+                
+            },{
+                headers:{
+                    'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
+                } 
+            }).then((value)=>{
+                handleClose()
+                setSuccess(true)
+            }).catch((value)=>{
+                handleClose()
+                setSuccess(false)
+            })
+        }else{
+            handleClose()
+            setopenReModal(true)
+        }
     }
     return (
       <div>
+            {success ?
+            <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                    Your Appointment is successfully added— <strong>check it out in your profile!</strong>
+            </Alert>:""}
         <Modal
           open={open}
           onClose={handleClose}
@@ -202,6 +209,7 @@ const Appoitment = ({open,handleClose,doctor}) => {
             </List>
           </Box>
         </Modal>
+        <Register open={openReModal} handleCloseRegisterModal={handleCloseRegisterModal}/>
       </div>
     );
   

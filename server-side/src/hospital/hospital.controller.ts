@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard3 } from 'src/auth/JwtAuthGaurd3';
 import { saveImageToStorage } from 'src/helpers/image-storage';
@@ -14,6 +14,7 @@ export class HospitalController {
     ){}
 
     @Get()
+    @UseInterceptors(ClassSerializerInterceptor)
     getAllHospitals():Promise<Hospital[]>{
         return this.hospitalService.getAllHospitals()
     }
@@ -39,6 +40,7 @@ export class HospitalController {
     }
 
     @UseGuards(JwtAuthGuard3)
+    @UseInterceptors(ClassSerializerInterceptor)
     @Post()
     addHospital(@Body() createHospitalDto:CreateHospitalDto):Promise<Hospital>{
         return this.hospitalService.addHospital(createHospitalDto)

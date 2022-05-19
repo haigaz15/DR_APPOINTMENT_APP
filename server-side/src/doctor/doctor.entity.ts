@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Hospital } from "src/hospital/hospital.entity";
 import { Section } from "src/section/section.entity";
 import { User } from "src/users/user.entiry";
@@ -20,6 +21,7 @@ export class Doctor{
     email:string
 
     @Column()
+    @Exclude()
     password:string
 
     @Column()

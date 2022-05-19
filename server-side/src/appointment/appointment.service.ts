@@ -21,17 +21,17 @@ export class AppointmentService {
 
     async getAppointmentByUserId(userId:string): Promise<Appointment[]> {
         const query = this.appointmentRepository.createQueryBuilder('appiontment')
-        const appiontments = await query.leftJoinAndSelect("appiontment.user","user").leftJoinAndSelect("appiontment.doctor","doctor").where('appiontment.user = :id', { id: userId }).getMany();
+        const appiontments = await query.leftJoinAndSelect("appiontment.doctor","doctor").where('appiontment.user = :id', { id: userId }).getMany();
         return appiontments;
     }
 
     async getAllAppointment():Promise<Appointment[]>{
         const query = this.appointmentRepository.createQueryBuilder('appiontment')
-        const appiontments = await query.leftJoinAndSelect("appiontment.doctor","doctor").getMany();
+        const appiontments = await query.leftJoin("appiontment.doctor","doctor").getMany();
         return appiontments;
     }
     
-    async createAppointment(createAppointmentDto:CreateAppointmentDto):Promise<Appointment>{
+    async createAppointment(createAppointmentDto:CreateAppointmentDto):Promise<String>{
         const { userId,doctorId,appointmentstatus,date} = createAppointmentDto;
         const doctor = await this.doctorService.getDoctorById(doctorId)
         const user = await this.userService.getUserById(userId)
@@ -41,17 +41,19 @@ export class AppointmentService {
             doctor,
             user 
         })
-        return await this.appointmentRepository.save(appointment)
+        await this.appointmentRepository.save(appointment)
+        return `appointment is created `
     }
 
-    async updateAppointment(appointmentId:string,updateAppointmentDto:UpdateAppointmentDto,signedInDoctorID):Promise<Appointment>{
+    async updateAppointment(appointmentId:string,updateAppointmentDto:UpdateAppointmentDto,signedInDoctorID):Promise<String>{
         const {appointmentstatus} = updateAppointmentDto
         const query = this.appointmentRepository.createQueryBuilder("appointment");
         const appointment = await query.leftJoinAndSelect("appointment.doctor","doctor")
         .where("appointment.id =:id",{id:appointmentId}).getOneOrFail()
         if(signedInDoctorID === appointment.doctor.id){
             appointment.appointmentstatus= appointmentstatus
-            return await this.appointmentRepository.save(appointment)
+            await this.appointmentRepository.save(appointment)
+            return `appointment is updated`
         }
         throw new UnauthorizedException("You are not authorized Doctor")
 

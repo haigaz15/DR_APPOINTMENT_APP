@@ -35,7 +35,7 @@ function App() {
           method: 'GET',
           headers: {
             'Content-type': 'image/jpeg',
-              'Authorization': `Bearer ${authToken}`, // notice the Bearer before your token
+              'Authorization': `Bearer ${authToken}`,
           },
           
       })

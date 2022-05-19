@@ -67,6 +67,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
   }
   return (
     <Paper elevation={20}>
+      <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
       <Grid container direction="column" alignItems="center" justify="center">
           <TextField
             label={`Search`}
@@ -141,7 +142,6 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
         </Tooltip>
         </Box>
       </TableContainer>
-      <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
     </Paper>
   );
 }

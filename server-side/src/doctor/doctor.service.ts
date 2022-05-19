@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Doctor } from './doctor.entity';
@@ -42,8 +42,10 @@ export class DoctorService {
 
          doctors.offset((page - 1)*perPage).limit(perPage);
 
+         const resultedDoctor = await doctors.getMany()
+         
          return {
-             data: await doctors.getMany(),
+             data: resultedDoctor.filter((doctor) => delete doctor.password),
              total,
              page,
              perPage,
@@ -77,11 +79,14 @@ export class DoctorService {
             firstname,lastname,email,password,
             specialty,countryOfSpecialty,
             university,bio,section,hospitals} = addDoctorDto;
+        const doctor = await this.getDoctorByEmail(email)
+        if(doctor){
+            throw new ConflictException('Doctor already exists ')
+        }else{
         const salt = await bycrypt.genSalt();
         const hashedPassword = await bycrypt.hash(password,salt)
         const section_:Section = await this.sectionService.getSection(section);
         const hospitals_:Hospital[]= await this.hospitalService.getSpecifiedHospital(hospitals)
-
         const doctor = this.doctorRepository.create({
             firstname,
             lastname,
@@ -97,6 +102,7 @@ export class DoctorService {
 
         await this.doctorRepository.save(doctor)
         return doctor
+        }
     }
 
     async deleteDoctor(id:string):Promise<String>{

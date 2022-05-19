@@ -18,7 +18,7 @@ export class HospitalService {
 
     async addHospital(createHospitalDto:CreateHospitalDto):Promise<Hospital>{
          const {name,location} = createHospitalDto;
-         const hospital = this.getHospitalByName(name)
+         const hospital = await this.getHospitalByName(name)
          if(hospital){
              throw new ConflictException('Hospital name already exists ')
          }else{

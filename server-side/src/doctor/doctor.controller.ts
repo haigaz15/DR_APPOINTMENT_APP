@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpException, Param, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard2 } from 'src/auth/JwtAuthGaurd2';
 import { saveImageToStorage } from 'src/helpers/image-storage';
@@ -27,10 +27,12 @@ export class DoctorController {
     }
 
     @Get('/:hosId/:secId')
+    @UseInterceptors(ClassSerializerInterceptor)
     async findDoctorByhands(@Param('hosId') hosId:string, @Param('secId') secId:string):Promise<Doctor[]>{
         return this.doctorService.findDoctorByHosBySec(hosId,secId);
     }
 
+    @UseInterceptors(ClassSerializerInterceptor)
     @UseGuards(JwtAuthGuard3)
     @Post()
     addDoctor(@Body() addDoctorDto:AddDoctorDto):Promise<Doctor>{

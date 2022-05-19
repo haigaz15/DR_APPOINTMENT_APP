@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Appointment } from "src/appointment/appointment.entity";
 import { Column, Entity,  ManyToMany,  OneToMany,  PrimaryGeneratedColumn } from "typeorm";
 
@@ -19,6 +20,7 @@ export class User {
     username:string
 
     @Column()
+    @Exclude()
     password:string 
 
     @Column({nullable:true})

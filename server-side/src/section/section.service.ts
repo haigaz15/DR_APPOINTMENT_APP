@@ -15,7 +15,7 @@ export class SectionService {
     async addSection(createSectionDto:CreateSectionDto):Promise<Section>{
 
         const {name} = createSectionDto
-        const section = this.getSection(name)
+        const section = await this.getSection(name)
         if(section){
             throw new ConflictException('Section already exists ')
         }else{
