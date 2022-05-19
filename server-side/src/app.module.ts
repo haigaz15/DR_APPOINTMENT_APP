@@ -9,7 +9,7 @@ import { SectionModule } from './section/section.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { AdminModule } from './admin/admin.module';
-
+import { ConfigModule } from '@nestjs/config';
 
 
 
@@ -17,13 +17,14 @@ import { AdminModule } from './admin/admin.module';
 
   imports: [UsersModule,
     AuthModule,
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'root',
-      password: 'Root++',
-      database: 'UsersDB',
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_USER,
       autoLoadEntities:true,
       //synchronize: true
     }),
