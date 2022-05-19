@@ -14,7 +14,7 @@ lerna-debug.log*
 # OS
 .DS_Store
 #envgit rm env.local --cached
-.env
+
 
 # Tests
 /coverage
