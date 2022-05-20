@@ -26,15 +26,14 @@ const Register = ({open,handleCloseRegisterModal}) => {
         <Box
           sx={{
             position: 'relative',
-            width: 400,
+            width: 800,
             bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: (theme) => theme.shadows[5],
+            boxShadow: "20px 20px 50px 15px grey",
             p: 4,
           }}
         >
           <Typography id="server-modal-title" variant="h6" component="h2">
-          Don't have an account <Link to='signup' style={{color:"#0e5687",}}>click here!!</Link>
+          Don't have an account <Link to='/signup' style={{color:"#0e5687",}}>click here!!</Link>
           </Typography>
           <Typography id="server-modal-description" sx={{ pt: 2 }} variant="h6" component="h2">
             If your already have an account please sign in to submit your appointment.

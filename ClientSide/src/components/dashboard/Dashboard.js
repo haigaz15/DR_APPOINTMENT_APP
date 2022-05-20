@@ -24,7 +24,7 @@ const data = [
   
 
 
-const Dashboard = () =>{
+const Dashboard = ({user}) =>{
 
 const [open, setOpen] = React.useState(true);
 const history = useHistory();
@@ -57,7 +57,7 @@ const handlelogout = () => {
             <ListItem component="div" >
               <ListItemButton sx={{ height: 56 }}>
                 <ListItemText
-                  primary={`Welcome gargar`}
+                  primary={`Welcome ${user.username}`}
                   primaryTypographyProps={{
                     color: 'white',
                     fontWeight: 'medium',

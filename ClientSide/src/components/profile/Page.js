@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react';
 import { Grid,TextField,Paper,Button, Typography } from '@mui/material';
 import './Page.css';
 import axios from 'axios';
-const Page = () => {
+const Page = ({user}) => {
 
   const [userImage,setUserImage] = useState("");
   const [uploadedImage,setUploadedImage] = useState({})
@@ -57,32 +57,68 @@ const Page = () => {
     window.location.reload()
   }
     return(
-        <Paper sx={{width:860,marginTop:2}} elevation={24}>
-        <Typography variant="h3"  style={{marginLeft:"5%"}}> Update your Profile</Typography>
+        <Paper sx={{
+          width:860,
+          marginTop:2,
+          marginBottom:2,
+          boxShadow: "20px 20px 50px 15px grey",
+          background:"linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)"
+        }} elevation={24} >
+        <Typography variant="h3"  style={{marginTop:"2%",marginLeft:"5%",color:"#0e5687"}}> {user.firstName + " " + user.lastName}</Typography>
+        <Typography variant="h6"  style={{marginTop:"2%",marginLeft:"5%",color:"#0e5687"}}> {"Your Email: " + user.email}</Typography>
         <div className="mb-1" style={{marginLeft:"5.5%",marginTop:"2%"}}>
              <span className="font-css top"><img width={200} src={userImage}/></span>
             <div className="">
                 <input type="file" id="file-input" name="ImageStyle" onChange={handleImageUpload}/>
             </div>
             <div>
-              <Button onClick={updateImage}>Save your Image</Button>
+              <Button sx={{
+                bgcolor:"#0e5687",
+                color:"white",
+                marginTop:"2%",
+                "&:hover.MuiButton-root":{
+                  bgcolor:"white",
+                  color:"#0e5687",
+                  marginTop:"2%",
+                }
+              }}
+              onClick={updateImage}>Save your Image</Button>
             </div>
         </div>
         <div className='editpageContainer1'>
 
             {['Update First Name','Update Last Name',' Update username'].map((item) =>(
             <div className='editpageItem1'>
-                <TextField  label={item} type="string" />
+                <TextField  
+                  label={item} 
+                  type="string" 
+                  variant="standard"
+                />
             </div>
           )) }
           </div>
         <div className='editpageContainer2'>
             {['Update email','Update Passsword'].map((item) =>(
               <div className='editpageItem2'>
-                  <TextField  label={item} type="string" />
+                  <TextField 
+                   variant="standard"
+                   label={item} 
+                   type={(item === 'Update email')? 'string': 'password'} />
               </div>
             ))}
-          <div><Button> Save Your changes </Button></div>
+          <div>
+        <Button 
+          sx={{
+            bgcolor:"#0e5687",
+            color:"white",
+            marginTop:"2%",
+            "&:hover.MuiButton-root":{
+              bgcolor:"white",
+              color:"#0e5687",
+              marginTop:"2%",
+            }
+          }}
+          > Save Your changes </Button></div>
         </div>
         
       </Paper>

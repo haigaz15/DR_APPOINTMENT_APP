@@ -22,7 +22,8 @@ const HospitalSection = () => {
             borderRadius:5,
             padding:1,
             width:900,
-            textAlign:"center"
+            textAlign:"center",
+            boxShadow: "20px 20px 50px 15px grey"
         }
 
     const openTheSection = (section) => {
@@ -43,7 +44,15 @@ const HospitalSection = () => {
              {
             hospitaldetails.sections.map((section,index)=>
                 <Grid item xs={2} sm={4} md={4} key={index} >
-                    <Paper elevation={12} sx={{ width: 328, height: 30 ,"&:hover.MuiPaper-root ":{background: '#0e5687',color:"white"}}} onClick={(e) => {openTheSection(section)}}>
+                    <Paper 
+                    elevation={12} 
+                    sx={{ 
+                        width: 328,
+                        height: 30 ,
+                        "&:hover.MuiPaper-root ":{background: '#0e5687',color:"white"},
+                        boxShadow: "20px 20px 50px 15px grey"
+                    }} 
+                        onClick={(e) => {openTheSection(section)}}>
                         <Typography sx={{textAlign:"center"}}>{section.name}</Typography>
                     </Paper>
                 </Grid>

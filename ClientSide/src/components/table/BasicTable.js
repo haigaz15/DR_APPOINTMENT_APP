@@ -66,7 +66,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
     }
   }
   return (
-    <Paper elevation={20}>
+    <Paper elevation={24} sx={{boxShadow: "20px 20px 50px 15px grey"}}>
       <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
       <Grid container direction="column" alignItems="center" justify="center">
           <TextField

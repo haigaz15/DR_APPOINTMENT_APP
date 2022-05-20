@@ -32,7 +32,7 @@ const Section = ({doctor}) => {
   console.log(doctor)
     return(
         <div style={{width:"450px",marginLeft:"2%",marginTop:"2%",marginBottom:"2%"}}>
-        <Card>
+        <Card sx={{boxShadow: "20px 20px 50px 15px grey"}}>
           <CardMedia 
           sx={{"&.MuiCardMedia-img":{width:"300px",margin:"auto"}}}
           component="img"

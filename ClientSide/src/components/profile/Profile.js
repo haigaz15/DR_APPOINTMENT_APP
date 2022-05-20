@@ -8,6 +8,7 @@ import Page from './Page'
 
 const Profile = () => {
     const [appointment,setAppointment] = useState([]);
+    const [user,setUser] = useState({})
     useEffect(()=>{
         axios.get("http://localhost:4000/appointment/user",{
             headers:{
@@ -20,14 +21,28 @@ const Profile = () => {
             console.log(result)
         })
     },[])
+
+    useEffect(()=> {
+        axios.get(`http://localhost:4000/users/${sessionStorage.getItem("userId")}`,{
+            headers:{
+                'Authorization' :`Bearer ${window.sessionStorage.getItem('token')}`
+            }
+        }).then((result)=>{
+            console.log(result)
+            setUser(result.data)
+        }).catch((result)=>{
+            console.log(result)
+        })
+    },[])
+
     return(
     <div className="profileContainer">
         <div className='dashboard'>
-            <Dashboard/>
+            <Dashboard user={user}/>
         </div>
         <div className='content'>
         <Switch>
-          <Route path="/profile/page" children={<Page />} />
+          <Route path="/profile/page" children={<Page user={user}/>} />
           <Route path="/profile/pendingappointments" children={<PendingAppointment  appointment={appointment}/>} />
         </Switch>
         </div>        

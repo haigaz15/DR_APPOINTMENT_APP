@@ -12,7 +12,8 @@ const style = {
     color:'white',
     borderRadius:5,
     padding:6,
-    textAlign:"center"
+    textAlign:"center",
+    boxShadow: "20px 20px 50px 15px grey"
 }
 
 const HomePage = () => {

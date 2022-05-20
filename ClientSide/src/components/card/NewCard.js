@@ -9,7 +9,7 @@ import {Card,CardActions,Button,CardContent,CardMedia,Typography} from '@mui/mat
       handleOpenHospital(`/hospitals/${data.name.toLowerCase().replace(/\s+/g, '')}`)
     }
     return(
-      <Card>
+      <Card sx={{boxShadow: "20px 20px 50px 15px grey"}}>
         <CardMedia 
         sx={{"&.MuiCardMedia-img":{width:"300px",margin:"auto"}}}
         component="img"
