@@ -22,6 +22,7 @@ export default function BasicTable({rows,images,page,handleDoctorPageChange, las
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const [image,setImage] = useState("")
 
 
   const [filtered,setFiltered] = React.useState([]);
@@ -42,8 +43,9 @@ export default function BasicTable({rows,images,page,handleDoctorPageChange, las
     setFiltered(filterRows)
   }
 
-  const handleDoctorClicked = (e,id) =>{
+  const handleDoctorClicked = (e,id,image) =>{
     setOpen(true)
+    setImage(image)
     let filtered = rows.filter((row)=>{return row.id === id});
     setClickedDoctor(filtered[0]);
   }
@@ -68,28 +70,9 @@ export default function BasicTable({rows,images,page,handleDoctorPageChange, las
     }
   }
 
-  // const fetchImage = async (doctor) => {
-  //   const res = await fetch(`http://localhost:4000/doctor/image/${doctor.id}`);
-  //   const imageBlob = await res.blob();
-  //   const imageObjectURL = URL.createObjectURL(imageBlob);
-  //   // const newArray = [...image,imageObjectURL]
-  //   // //newArray.push(imageObjectURL)
-  //   // setImage(newArray);
-  //   console.log(imageObjectURL)
-  //   return imageObjectURL
-  // };
-
-
-  
-// useEffect(()=>{
-//   rows.map((row) => {
-//     fetchImage(row)
-//   })
-// },[])
-console.log(images)
   return (
     <Paper elevation={24} sx={{boxShadow: "20px 20px 50px 15px grey"}}>
-      <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
+      <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} image={image}/>
       <Grid container direction="column" alignItems="center" justify="center">
           <TextField
             label={`Search`}
@@ -122,7 +105,7 @@ console.log(images)
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
-                onClick={(e)=>handleDoctorClicked(e,row.id)}
+                onClick={(e)=>handleDoctorClicked(e,row.id,images[index])}
               >
                 <TableCell component="th" scope="row" >
                   <Grid container>
@@ -140,7 +123,7 @@ console.log(images)
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
-                onClick={(e)=>handleDoctorClicked(e,row.id)}
+                onClick={(e)=>handleDoctorClicked(e,row.id,images[index])}
               >
                 <TableCell component="th" scope="row">
                   <Grid container>

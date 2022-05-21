@@ -30,7 +30,7 @@ const style = {
 
 
 
-const Appoitment = ({open,handleClose,doctor,setOpenAppointment}) => {
+const Appoitment = ({open,handleClose,doctor,setOpenAppointment,image}) => {
     const userId = sessionStorage.getItem('userId')
 
     const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -86,7 +86,7 @@ const Appoitment = ({open,handleClose,doctor,setOpenAppointment}) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-           <Avatar alt={doctor.firstname} src='.' sx={avatarStyle}/>
+           <Avatar alt={doctor.firstname} src={image} sx={avatarStyle}/>
            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <ListItem alignItems="flex-start">
                     <ListItemText
