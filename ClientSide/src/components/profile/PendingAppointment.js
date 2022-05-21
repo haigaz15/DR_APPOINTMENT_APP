@@ -5,9 +5,8 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Grid,Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 const columns = [
     { id: 'firstName', label: 'Dr. First Name', minWidth: 170 },
     { id: 'lastName', label: 'Dr. Last Name', minWidth: 100 },
@@ -38,18 +37,6 @@ const columns = [
 
   
 const PendingAppointment = ({appointment}) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-
 
     const appointmentStatus = (row) =>{
         if(row.appointmentstatus === "pending"){
@@ -106,15 +93,7 @@ const PendingAppointment = ({appointment}) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={appointment.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+
     </Paper>
     )
 }

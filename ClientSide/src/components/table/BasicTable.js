@@ -1,4 +1,4 @@
-import  React, {useState} from 'react';
+import  React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,13 +14,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import Appoitment from '../appoitment/Appoitment';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import axios from 'axios';
 
 
 
-export default function BasicTable({rows,page,handleDoctorPageChange, lastPage}) {
+export default function BasicTable({rows,images,page,handleDoctorPageChange, lastPage}) {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+
 
   const [filtered,setFiltered] = React.useState([]);
   const [flag,setFlag] = React.useState(true)
@@ -65,6 +67,26 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
       handleDoctorPageChange(newPage)
     }
   }
+
+  // const fetchImage = async (doctor) => {
+  //   const res = await fetch(`http://localhost:4000/doctor/image/${doctor.id}`);
+  //   const imageBlob = await res.blob();
+  //   const imageObjectURL = URL.createObjectURL(imageBlob);
+  //   // const newArray = [...image,imageObjectURL]
+  //   // //newArray.push(imageObjectURL)
+  //   // setImage(newArray);
+  //   console.log(imageObjectURL)
+  //   return imageObjectURL
+  // };
+
+
+  
+// useEffect(()=>{
+//   rows.map((row) => {
+//     fetchImage(row)
+//   })
+// },[])
+console.log(images)
   return (
     <Paper elevation={24} sx={{boxShadow: "20px 20px 50px 15px grey"}}>
       <Appoitment open={open} handleClose={handleClose} doctor={clickedDoctor} />
@@ -96,7 +118,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
             </TableRow>
           </TableHead>
           <TableBody>
-            {flag ? rows.map((row) =>(
+            {flag ? rows.map((row,index) =>(
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
@@ -104,7 +126,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
               >
                 <TableCell component="th" scope="row" >
                   <Grid container>
-                    <Grid item lg={2}><Avatar alt={row.firstname} src='.' sx={{marginTop:"-20%",marginLeft:"-20%"}}/></Grid>
+                    <Grid item lg={2}><Avatar alt={row.firstname} src={images[index]} sx={{marginTop:"-20%",marginLeft:"-20%"}}/></Grid>
                     <Grid item lg={10}>{row.firstname} {row.lastname}</Grid>
                   </Grid>
                 </TableCell>
@@ -114,7 +136,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
                 <TableCell align="right">{row.countryOfSpecialty}</TableCell>
               </TableRow>
              
-            )): filtered.map((row) => (
+            )): filtered.map((row,index) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } , '&:hover.MuiTableRow-root':{background: '#0e5687',opacity:0.9}}}
@@ -122,7 +144,7 @@ export default function BasicTable({rows,page,handleDoctorPageChange, lastPage})
               >
                 <TableCell component="th" scope="row">
                   <Grid container>
-                    <Grid item lg={2} ><Avatar alt={row.firstname} src='.' sx={{marginTop:"-20%",marginLeft:"-20%"}}/></Grid>
+                    <Grid item lg={2} ><Avatar alt={row.firstname} src={images[index]} sx={{marginTop:"-20%",marginLeft:"-20%"}}/></Grid>
                     <Grid item lg={10}>{row.firstname} {row.lastname}</Grid>
                   </Grid>
                 </TableCell>
