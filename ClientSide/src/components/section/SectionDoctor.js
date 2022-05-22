@@ -11,9 +11,9 @@ import Register from '../ErroPage/Register';
 const SectionDoctor = ({doctor}) => {
 
     const [image,setImage] = useState(null)
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [value, setValue] = React.useState(new Date('2022-08-18T21:11:54'));
     const [openReModal,setopenReModal] = useState(false);
-
+    const [fail,setFail] = React.useState(false)
     const [success,setSuccess] = useState(false)
 
     const fetchImage = async () => {
@@ -51,7 +51,7 @@ const SectionDoctor = ({doctor}) => {
         }).then((value)=>{
             setSuccess(true)
         }).catch((value)=>{
-            setSuccess(false)
+            setFail(true)
         })
     }else{
         setopenReModal(true)
@@ -65,6 +65,11 @@ const SectionDoctor = ({doctor}) => {
         {success ?<Alert severity="success">
             <AlertTitle>Success</AlertTitle>
                 Your Appointment is successfully added— <strong>check it out in your profile!</strong>
+            </Alert>:""}
+            {fail ?
+            <Alert severity="warning">
+                <AlertTitle>warning</AlertTitle>
+                    Your Appointment with chosen time slot already exsit— <strong>check it out in your profile!</strong>
             </Alert>:""}
             <Paper sx={style1} elevation={24}>
             <div className="secDocCont">
@@ -138,22 +143,39 @@ const SectionDoctor = ({doctor}) => {
             </div>
             </div>
             <Divider variant="inset" component="li" sx={{marginRight:4,color:'white'}}/>
-            <div className='secCont2'>
-            <div className='item1-1'>
-              <Typography color="white" sx={{marginTop:"-6%",marginLeft:"2%"}}>Book a date</Typography>
-            </div>
-            <div className='item1-2'>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Box 
+                sx={{
+                display:'flex',
+                justifyContent:"space-evenly",
+                marginTop:"10%",
+                marginRight:"23.2%"
+                }}>
+            <Typography  sx={{color:"white"}}>Book A Date</Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns} >
             <DateTimePicker
-                label="Date&Time picker"
                 value={value}
                 onChange={handleChange}
                 renderInput={(params) => <TextField {...params} sx={{bgcolor:'white', label: { color: 'black' }}}/>}
                 />
             </LocalizationProvider>
-            </div>  
-            </div>
-            <Button sx={{marginLeft:'30%',color:'white'}} onClick={handleSubmit}>Submit</Button> 
+            </Box>
+            <Box 
+                sx={{
+                display:'flex',
+                justifyContent:"Center",
+                }}>
+            <Button 
+                sx={{
+                bgcolor:"white",
+                color:'black',
+                width:"26.7%",
+                marginTop:"2%",
+                "&:hover.MuiButton-root":{
+                    bgcolor:"black",
+                    color:"white",
+                  }
+                }} onClick={handleSubmit}>Submit</Button>  
+            </Box>
             </Paper>
             <Register open={openReModal} handleCloseRegisterModal={handleCloseRegisterModal}/>
         </div>

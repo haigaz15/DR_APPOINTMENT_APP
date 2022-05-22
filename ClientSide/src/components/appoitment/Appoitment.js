@@ -9,6 +9,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import axios from 'axios';
 import Register from '../ErroPage/Register';
+import { parseISO } from 'date-fns'; 
 
 const style = {
     position: 'absolute',
@@ -33,17 +34,20 @@ const style = {
 const Appoitment = ({open,handleClose,doctor,setOpenAppointment,image}) => {
     const userId = sessionStorage.getItem('userId')
 
-    const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [value, setValue] = React.useState(new Date(Date.parse('2022-01-26T13:51:50.417-07:00')));
     const [user,setUser] = React.useState(null);
 
     const [openReModal,setopenReModal] = React.useState(false);
     const [success,setSuccess] = React.useState(false);
+    const [fail,setFail] = React.useState(false)
 
     const handleChange = (newValue) => {
-      setValue(newValue);
+        // let a = new Date(newValue).getDay()
+        setValue(newValue);
     };
 
     const handleCloseRegisterModal = () => setopenReModal(false);
+
 
 
     const handleSubmit = (e) =>{
@@ -65,7 +69,7 @@ const Appoitment = ({open,handleClose,doctor,setOpenAppointment,image}) => {
                 setSuccess(true)
             }).catch((value)=>{
                 handleClose()
-                setSuccess(false)
+                setFail(true)
             })
         }else{
             handleClose()
@@ -78,6 +82,11 @@ const Appoitment = ({open,handleClose,doctor,setOpenAppointment,image}) => {
             <Alert severity="success">
                 <AlertTitle>Success</AlertTitle>
                     Your Appointment is successfully added— <strong>check it out in your profile!</strong>
+            </Alert>:""}
+            {fail ?
+            <Alert severity="warning">
+                <AlertTitle>warning</AlertTitle>
+                    Your Appointment with chosen time slot already exsit— <strong>check it out in your profile!</strong>
             </Alert>:""}
         <Modal
           open={open}

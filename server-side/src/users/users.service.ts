@@ -59,10 +59,12 @@ export class UsersService {
 
         try{
             await this.usersRepository.save(user)
-            return `user with id ${user.id} & username ${user.username} is created`
-        }catch(error){
-            throw new ConflictException('Username already exists ')
-        } 
+            return `user username ${user.username} is updated`
+        }catch{
+            throw new ConflictException('username conflict') 
+        }
+
+        
     }
     
     async getUserById(id:string):Promise<User>{

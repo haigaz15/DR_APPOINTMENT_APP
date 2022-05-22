@@ -6,6 +6,11 @@ const Page = ({user}) => {
 
   const [userImage,setUserImage] = useState("");
   const [uploadedImage,setUploadedImage] = useState({})
+  const [email,setEmail] = useState("")
+  const [firstName,setFirstName] = useState("")
+  const [lastName,setLastName] = useState("")
+  const [username,setUserName] = useState("")
+  const [password,setPassword] = useState("")
 
   async function displayProtectedImage(
     imageUrl, authToken
@@ -25,6 +30,10 @@ const Page = ({user}) => {
     if(sessionStorage.getItem('token')){
       displayProtectedImage(`http://localhost:4000/users/image/`,sessionStorage.getItem('token'))
     }
+  },[])
+
+  useEffect(()=>{
+    axios.post()
   },[])
 
   const handleImageUpload = (e) =>{
@@ -55,6 +64,46 @@ const Page = ({user}) => {
     console.log(uploadedImage)
     postImage(uploadedImage)
     window.location.reload()
+  }
+
+  const handleChangeFLE = (e,item) =>{
+    if(item === 'Update email'){
+      console.log(email)
+      setEmail(e.target.value)
+    }if(item === 'Update Last Name'){
+      console.log(lastName)
+      setLastName(e.target.value)
+    }if(item === 'Update username'){
+      console.log(username)
+      setUserName(e.target.value)
+    }if(item === 'Update First Name'){
+      console.log(firstName)
+      setFirstName(e.target.value)
+    }if (item === 'Update Password'){
+      console.log(password)
+      setPassword(e.target.value)
+    }
+  }
+
+  const handleChangeSubmit = () =>{
+    axios.patch("http://localhost:4000/users",
+        {
+          firstName:firstName,
+          username:username,
+          lastName:lastName,
+          email:email,
+          password:password,
+      },{
+        headers:{
+          'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+        }
+      }
+    ).then((value)=>{
+      window.location.reload()
+    }).catch((error)=>{
+      console.log(error)
+    })
+
   }
     return(
         <Paper sx={{
@@ -87,23 +136,26 @@ const Page = ({user}) => {
         </div>
         <div className='editpageContainer1'>
 
-            {['Update First Name','Update Last Name',' Update username'].map((item) =>(
+            {['Update First Name','Update Last Name','Update username'].map((item) =>(
             <div className='editpageItem1'>
                 <TextField  
                   label={item} 
                   type="string" 
                   variant="standard"
+                  onChange={(e)=> handleChangeFLE(e,item)}
                 />
             </div>
           )) }
           </div>
         <div className='editpageContainer2'>
-            {['Update email','Update Passsword'].map((item) =>(
+            {['Update email','Update Password'].map((item) =>(
               <div className='editpageItem2'>
                   <TextField 
                    variant="standard"
                    label={item} 
-                   type={(item === 'Update email')? 'string': 'password'} />
+                   type={(item === 'Update email')? 'string': 'password'}
+                   onChange={(e)=> handleChangeFLE(e,item)}
+                    />
               </div>
             ))}
           <div>
@@ -118,6 +170,7 @@ const Page = ({user}) => {
               marginTop:"2%",
             }
           }}
+          onClick={handleChangeSubmit}
           > Save Your changes </Button></div>
         </div>
         

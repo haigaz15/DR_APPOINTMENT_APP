@@ -37,7 +37,6 @@ const columns = [
 
   
 const PendingAppointment = ({appointment}) => {
-
     const appointmentStatus = (row) =>{
         if(row.appointmentstatus === "pending"){
             return <Button disableRipple={true} sx={{width: "100px",background:"#fcbe03",color:"black","&:hover": {
@@ -52,10 +51,10 @@ const PendingAppointment = ({appointment}) => {
                 backgroundColor: "#db3737"
             }}}>{row.appointmentstatus}</Button>
         }
-    } 
+    }
     return(
-    <Paper sx={{ width: '100%',marginTop:2,marginBottom:20,boxShadow: "20px 20px 50px 15px grey" }} elevation={24}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper sx={{ width: '100%',marginTop:2,marginBottom:2,boxShadow: "20px 20px 50px 15px grey" }} elevation={24}>
+      <TableContainer sx={{ maxHeight: 730 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -84,8 +83,8 @@ const PendingAppointment = ({appointment}) => {
             <TableRow>
                 <TableCell>{row.doctor.firstname}</TableCell>
                 <TableCell>{row.doctor.lastname}</TableCell>
-                <TableCell align="right">{new Date(row.date).getUTCDay() +  "/" +new Date(row.date).getUTCMonth() + "/" + new Date(row.date).getUTCFullYear()}</TableCell>
-                <TableCell align="right">{new Date(row.date).getUTCHours() + ":" +new Date(row.date).getUTCMinutes() }</TableCell>
+                <TableCell align="right">{new Date(row.date).getDate() +  "/" +(parseInt(new Date(row.date).getMonth()) + 1)+ "/" + new Date(row.date).getFullYear()}</TableCell>
+                <TableCell align="right">{new Date(row.date).getHours() + ":" +new Date(row.date).getMinutes() }</TableCell>
                 <TableCell align="right">{appointmentStatus(row)}</TableCell>
               </TableRow>
                 );

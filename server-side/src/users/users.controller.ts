@@ -51,9 +51,10 @@ export class UsersController {
 
     @UseGuards(JwtAuthGuard1)
     @Patch()
-    updateUser(@Req()req, @Res() res,@Body() createUserDto:CreateUserDto ):Promise<String>{
+    async updateUser(@Req()req, @Res() res,@Body() createUserDto:CreateUserDto ):Promise<String>{
         const userId = req.user.id
-        return res.send(this.usersService.updateUser(userId,createUserDto));
+        const updatedUser = await this.usersService.updateUser(userId,createUserDto);
+        return res.send(updatedUser);
     }
 
 

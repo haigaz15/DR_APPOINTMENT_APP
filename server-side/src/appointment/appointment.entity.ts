@@ -13,8 +13,8 @@ export class Appointment{
     @Column({default:Status.BOOK})
     appointmentstatus:string
 
-    @Column({default:null})
-    date?:Date
+    @Column()
+    date:Date
 
     @ManyToOne(() => Doctor, (doctor) => doctor.appointments)
     doctor: Doctor
