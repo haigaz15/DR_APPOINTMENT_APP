@@ -19,7 +19,7 @@ const style = {
 const HomePage = () => {
     
     return( <Box sx={{marginTop:"10px"}}>
-        <Paper sx={style}><h1> Welcome To Doctor Appointments where all of your Inconvince vanish! </h1> </Paper>
+        <Paper sx={style}><h1> Welcome To Doctor Appointments where all of your Inconvince vanish! Yeah I added this Now </h1> </Paper>
          </Box>
      )
 }
