@@ -53,7 +53,7 @@ const PendingAppointment = ({appointment}) => {
         }
     }
     return(
-    <Paper sx={{ width: '100%',marginTop:2,marginBottom:2,boxShadow: "20px 20px 50px 15px grey" }} elevation={24}>
+    <Paper sx={{ width: '100%',marginTop:2,marginBottom:"35%",boxShadow: "20px 20px 50px 15px grey" }} elevation={24}>
       <TableContainer sx={{ maxHeight: 730 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

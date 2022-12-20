@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import demoCss from './SignUp.module.css'
 import { Link } from 'react-router-dom';
-import {TextField,Box,FormControl,Typography} from '@mui/material/';
+import {TextField,Box,FormControl,Typography,Alert,AlertTitle} from '@mui/material/';
 import axios from 'axios';
 import { Button } from '@mui/material';
 
@@ -12,6 +12,8 @@ const SignUp = () => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [username,setUserName] = useState('')
+    const [success,setSuccess] = React.useState(false);
+    const [fail,setFail] = React.useState(false)
 
     const handleSubmit = () => {
         axios.post("http://localhost:4000/users",{
@@ -20,7 +22,15 @@ const SignUp = () => {
             email:email,
             username:username,
             password:password
-        }).then(response => console.log(response)).catch(error => console.log(error))
+        })
+        .then((response) =>{
+          setSuccess(true)
+          setFail(false)
+        })
+        .catch(error => {
+          setFail(true)
+          setSuccess(false)
+        })
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -29,6 +39,16 @@ const SignUp = () => {
     return(
 
     <Box className={demoCss.root}>
+      {success ?
+            <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                    You successfully created your website <strong>log in to enjoy!</strong>
+            </Alert>:""}
+      {fail ?
+      <Alert severity="warning">
+          <AlertTitle>warning</AlertTitle>
+              Unable to SignUp <strong>Please check your entered credentials!</strong>
+      </Alert>:""}
         <Typography variant="h4" style={{marginBottom:'20px', color:'white'}}>SignUp</Typography>
           <TextField
             className={demoCss.formcontrol}
