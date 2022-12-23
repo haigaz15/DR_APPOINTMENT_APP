@@ -18,7 +18,7 @@ import SearchBar from './SearchBar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './ListItems';
 import Chart from './Chart';
-
+import HomeTable from './HomeTable'
 
 const drawerWidth = 240;
 
@@ -84,7 +84,6 @@ const Home = () => {
           <AppBar position="absolute" open={open}>
             <Toolbar
               sx={{
-                
                 justifyContent:'space-evenly',
                 pr: '24px', // keep right padding when drawer closed
               }}
@@ -170,6 +169,7 @@ const Home = () => {
                 {/* Recent Orders */}
                 <Grid item xs={12}>
                   <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <HomeTable/>
                   </Paper>
                 </Grid>
               </Grid>
