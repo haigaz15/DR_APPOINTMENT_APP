@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { Section } from './section.entity';
 
@@ -44,7 +44,7 @@ export class SectionService {
     }
 
     async getSection(name:string):Promise<Section>{
-        const section  = await this.sectionRepository.findOne({name})
+        const section  = await this.sectionRepository.findOne({name} as FindOneOptions)
         return section;
     }
 

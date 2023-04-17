@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entiry';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import * as bycrypt from 'bcrypt';
 
 @Injectable()
@@ -21,7 +21,9 @@ export class UsersService {
     }
 
     async findOne(username:string):Promise<User>{
-        const user = await this.usersRepository.findOne({username});
+        const user = await this.usersRepository.findOne({
+            username
+        } as FindOneOptions);
         return user;
     }
      
@@ -48,7 +50,7 @@ export class UsersService {
 
     async updateUser(id:string,createUserDto:CreateUserDto):Promise<String>{
         const {firstName,lastName,email,password,username} = createUserDto;
-        const user = await this.usersRepository.findOne(id);
+        const user = await this.usersRepository.findOne(id as FindOneOptions);
         const salt = await bycrypt.genSalt();
         const hashedPassword = await bycrypt.hash(password,salt)
         user.firstName = firstName
@@ -68,7 +70,7 @@ export class UsersService {
     }
     
     async getUserById(id:string):Promise<User>{
-        const found = await this.usersRepository.findOne(id);
+        const found = await this.usersRepository.findOne(id as FindOneOptions);
         if(!found){
             throw new NotFoundException(`User with Id ${id} not found`)
         }
