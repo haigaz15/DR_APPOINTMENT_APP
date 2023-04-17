@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Doctor } from 'src/doctor/doctor.entity';
 import { Section } from 'src/section/section.entity';
 import { SectionService } from 'src/section/section.service';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateHospitalDto } from './dto/create-hospital.dto';
 import { Hospital } from './hospital.entity';
 
@@ -52,7 +52,7 @@ export class HospitalService {
     }
 
     async getHospitalByName(name:string):Promise<Hospital>{
-        const hospital  = await this.hospitalRepository.findOne({name})
+        const hospital  = await this.hospitalRepository.findOne({name} as FindOneOptions)
         return hospital;
     }
 

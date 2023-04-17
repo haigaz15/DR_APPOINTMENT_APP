@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { Doctor } from './doctor.entity';
 import { AddDoctorDto } from './dto/adddoctor.dto';
 import * as bycrypt from 'bcrypt';
@@ -62,7 +62,7 @@ export class DoctorService {
     }
 
      async getDoctorById(id:string):Promise<Doctor>{
-         const doctor = await this.doctorRepository.findOne(id);
+         const doctor = await this.doctorRepository.findOne(id as FindOneOptions);
          if(!doctor){
             throw new NotFoundException(`Doctor with Id ${id} not found`)
         }
@@ -70,7 +70,7 @@ export class DoctorService {
      }
 
      async getDoctorByEmail(email:string):Promise<Doctor>{
-         const doctor = await this.doctorRepository.findOne({email})
+         const doctor = await this.doctorRepository.findOne({email} as FindOneOptions)
          return doctor
      }
      

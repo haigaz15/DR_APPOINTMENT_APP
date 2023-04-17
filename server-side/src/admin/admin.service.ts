@@ -3,7 +3,7 @@ import { Admin } from './admin.entity';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import * as bycrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class AdminService {
@@ -33,12 +33,12 @@ export class AdminService {
     }
 
     async findOne(username:string):Promise<Admin>{
-        const admin  = await this.adminRepository.findOne({username})
+        const admin  = await this.adminRepository.findOne({username} as FindOneOptions)
         return admin;
     }
 
     async findById(id:string):Promise<Admin>{
-        const admin  = await this.adminRepository.findOne({id})
+        const admin  = await this.adminRepository.findOne({id} as  FindOneOptions)
         return admin;
     }
 }
