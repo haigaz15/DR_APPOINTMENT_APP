@@ -64,7 +64,3 @@ cd ClientSide && npm run dev
 cd clientside-doctor && npm run dev
 ```
 
-
-
-## 🧱 Architecture
-
